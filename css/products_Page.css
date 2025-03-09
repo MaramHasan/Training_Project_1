@@ -1,0 +1,460 @@
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+
+  }
+
+
+  .navbar {
+      background-color: #002233;
+      color: white;
+      padding: 15px 20px 0px 20px;
+      width: 100%;
+  }
+
+  .logo {
+      font-size: 20px;
+      font-weight: bold;
+  }
+
+  .nav-links {
+      list-style: none;
+      display: flex;
+  }
+
+  .nav-links li {
+      margin: 0 15px;
+      position: relative;
+      cursor: pointer;
+  }
+
+  .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      padding: 10px;
+      display: inline-block;
+  }
+
+  .dropdown {
+      display: none;
+      position: fixed;
+
+      top: 80px;
+
+      left: 0;
+      width: 100vw;
+
+      background-color: white;
+      padding: 20px 50px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      color: black;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      z-index: 1000;
+  }
+
+  .dropdown.active {
+      display: flex;
+
+  }
+
+  .dropdown .column {
+      flex: 1;
+      min-width: 250px;
+  }
+
+  .dropdown .column h3 {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+  }
+
+  .dropdown .column a {
+      display: block;
+      color: black;
+      text-decoration: none;
+      padding: 5px 0;
+  }
+
+  .dropdown .column a:hover {
+      color: #007BFF;
+  }
+
+
+  .icons i {
+      margin-left: 15px;
+      cursor: pointer;
+  }
+
+  .navbar-top,
+  .navbar-bottom {
+      display: none;
+  }
+
+  .forlinks {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding-bottom: 0;
+  }
+
+  .forlogos {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      width: 100%;
+  }
+
+  @media (max-width: 768px) {
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: Arial, sans-serif;
+      }
+
+      .navbar {
+          display: none;
+      }
+
+      .navbar-top {
+          background-color: #002233;
+          color: white;
+          padding: 10px 20px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+      }
+
+      .navbar {
+          display: none;
+      }
+
+      .navbar-top .logo {
+          font-size: 22px;
+          font-weight: bold;
+      }
+
+      .navbar-top .search-bar {
+          flex: 1;
+          margin: 0 20px;
+          display: flex;
+          align-items: center;
+          background: white;
+          border-radius: 5px;
+          padding: 5px;
+      }
+
+      .navbar-top .search-bar input {
+          border: none;
+          outline: none;
+          flex: 1;
+          padding: 8px;
+          font-size: 14px;
+      }
+
+      .navbar-top .search-bar i {
+          margin-right: 10px;
+          color: #555;
+          cursor: pointer;
+      }
+
+      .navbar-top .icons i {
+          margin-left: 15px;
+          cursor: pointer;
+          font-size: 20px;
+      }
+
+      .navbar-bottom {
+          background-color: #001a29;
+          padding: 10px;
+          display: flex;
+          justify-content: center;
+      }
+
+      .navbar-bottom ul {
+          list-style: none;
+          display: flex;
+      }
+
+      .navbar-bottom ul li {
+          margin: 0 15px;
+          position: relative;
+          cursor: pointer;
+      }
+
+      .navbar-bottom ul li a {
+          color: white;
+          text-decoration: none;
+          font-size: 16px;
+          padding: 10px;
+          display: inline-block;
+      }
+
+      .dropdown {
+          display: none;
+          position: fixed;
+          top: 100px;
+          left: 0;
+          width: 100vw;
+          background-color: white;
+          padding: 20px 50px;
+          box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+          color: black;
+          justify-content: space-around;
+          flex-wrap: wrap;
+          z-index: 1000;
+      }
+
+      .dropdown.active {
+          display: flex;
+      }
+
+      .dropdown .column {
+          flex: 1;
+          min-width: 250px;
+      }
+
+      .dropdown .column h3 {
+          font-size: 18px;
+          font-weight: bold;
+          margin-bottom: 10px;
+      }
+
+      .dropdown .column a {
+          display: block;
+          color: black;
+          text-decoration: none;
+          padding: 5px 0;
+          font-size: 14px;
+      }
+
+      .dropdown .column a:hover {
+          color: #007BFF;
+      }
+
+      .navbar-top .menu-icon {
+          display: none;
+          font-size: 28px;
+          cursor: pointer;
+      }
+
+      .navbar-bottom {
+          display: none;
+      }
+
+      .navbar-top .icons {
+          margin-left: auto;
+      }
+
+      .navbar-top .menu-icon {
+          display: block;
+      }
+
+      .navbar-bottom.active {
+          display: flex;
+          width: 100%;
+          background-color: #001a29;
+          flex-direction: column;
+          padding: 15px 20px;
+      }
+
+      .navbar-bottom ul {
+          flex-direction: column;
+          align-items: flex-start;
+      }
+
+      .navbar-bottom ul li {
+          margin: 10px 0;
+      }
+
+      .navbar-bottom ul li a {
+          padding: 8px 20px;
+      }
+
+      .dropdown.active {
+          position: relative;
+          width: 100%;
+          padding: 0;
+          box-shadow: none;
+          justify-content: flex-start;
+      }
+
+      .dropdown .column {
+          width: 100%;
+          margin-bottom: 10px;
+      }
+
+      .dropdown .column h3 {
+          font-size: 16px;
+          margin-bottom: 5px;
+      }
+  }
+
+
+  .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 20px;
+  }
+
+  .image-section {
+      width: 300px;
+  }
+
+  .thumbnail {
+      width: 50px;
+      margin: 5px;
+      cursor: pointer;
+  }
+
+  .details-section {
+
+      width: 400px;
+
+  }
+
+  .details {
+      height: 300px;
+  }
+
+  .details div {
+      height: 15px;
+      padding: 0;
+      margin: 0;
+
+  }
+
+  #product-name {
+      margin: 0;
+  }
+
+  hr {
+      width: 100%;
+      border: 1px solid #ddd;
+      margin-bottom: 3px;
+  }
+
+  .price {
+      font-size: 24px;
+      color: #000;
+      display: inline;
+  }
+
+  .cart-controls {
+      display: flex;
+      align-items: center;
+  }
+
+  .cart-controls button {
+      margin: 5px;
+  }
+
+  .add-to-cart {
+      background-color: #002244;
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+  }
+
+  #swatches-container img {
+      width: 30px;
+      height: 30px;
+      margin: 5px;
+      cursor: pointer;
+  }
+
+  .container .image-section .thumbnail {
+      width: 40px;
+      height: 40px;
+      margin-right: 5px;
+  }
+
+  .container .image-section .mmm #main-img {
+      display: flex;
+      justify-content: flex-end;
+      width: 300px;
+      height: auto;
+  }
+
+  .mmm {
+      display: flex;
+      justify-content: flex-end;
+  }
+
+  .quantity-container {
+      display: flex;
+      align-items: center;
+      border: 1px solid #000;
+      width: 80px;
+      justify-content: space-between;
+      padding: 5px;
+  }
+
+  .quantity-container button {
+      border: none;
+      background: none;
+      font-size: 16px;
+      cursor: pointer;
+      width: 20px;
+      text-align: center;
+  }
+.toggle-button {
+  
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: transparent;
+    color: gray;
+    border: none;
+    cursor: pointer;
+}
+
+.toggle-button:hover {
+    color: rgb(86, 85, 85);
+}
+  .quantity-container span {
+      font-size: 16px;
+      width: 20px;
+      text-align: center;
+  }
+
+  .add-to-cart {
+      background-color: #0A0E2A;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-left: 10px;
+  }
+
+  .add-to-cart:hover {
+      background-color: #070A1E;
+  }
+
+  .add-to-list {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      color: #0A0E2A;
+      font-size: 14px;
+      cursor: pointer;
+  }
+
+  .add-to-list::before {
+      content: "♥";
+      margin-right: 5px;
+  }
+
+  .thumbnail-container {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+  }
