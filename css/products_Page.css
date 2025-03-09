@@ -36,7 +36,11 @@
       padding: 10px;
       display: inline-block;
   }
-
+.arrow {
+    position: absolute;
+    top: 3px;
+    right: 0px;
+}
   .dropdown {
       display: none;
       position: fixed;

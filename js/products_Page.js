@@ -39,11 +39,11 @@ function changeMenuContent(category) {
     } else if (category == "menu") {
         newMenuContent = `
                    <li><a href="#">Home</a></li>
-                   <li class="dropdown-trigger"><a href="#" onclick="changeMenuContent('products')">Products &gt;</a></li>
+                   <li class="dropdown-trigger"><a href="#" onclick="changeMenuContent('products')">Products <span class="arrow">⌄</span></a></li>
                    <li><a href="#">Goods</a></li>
                    <li><a href="#">About</a></li>
                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Categories ⌄</a></li>
+                    <li><a href="#">Categories <span class="arrow">⌄</span></a></li>
                 `;
     }
 
