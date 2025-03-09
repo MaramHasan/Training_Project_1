@@ -16,7 +16,7 @@
         <div class="navbar">
             <div class="forlogos">
                 <div class="logo">MY SHOP</div>
-                <div><input type="text" placeholder="Search"> 🔎</div>
+                <div><input type="text" placeholder="Search" id="home-search"> 🔎</div>
                 <div class="icons">
         
                     <i>❤️</i>
@@ -29,8 +29,8 @@
                 <ul class="nav-links">
                     <li><a href="#">Home</a></li>
                     <li class="dropdown-trigger" data-dropdown="productsDropdown">
-                        <a href="products_Page.html">Products ⌄</a>
-                        <div id="productsDropdown" class="dropdown">
+                        <a href="products_Page.html">Products <span class="arrow">⌄</span></a>
+                        <div id="productsDropdown" class="dropdown" >
                             <div class="column">
                                 <h3>2.1 PAGE LINK HEADER</h3>
                                 <a href="#">2.1.1 Page link</a>
@@ -54,7 +54,7 @@
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact</a></li>
                     <li class="dropdown-trigger" data-dropdown="categoriesDropdown">
-                        <a href="#">Categories ⌄</a>
+                        <a href="#">Categories  <span class="arrow">⌄</span></a>
                         <div id="categoriesDropdown" class="dropdown">
                             <div class="column">
                                 <h3>3.1 CATEGORY LINK HEADER</h3>
@@ -94,7 +94,7 @@
         
         <div class="navbar-top">
             <div class="search-bar">
-                <input type="text" placeholder="Search">
+                <input type="text" placeholder="Search" id="s-search">
                 <i>🔍</i>
             </div>
         </div>
@@ -107,7 +107,7 @@
                 </li>
                 <li><a href="#">Goods</a></li>
                 <li><a href="#">About</a></li>
-                 <li><a href="#">Categories ⌄</a></li>
+                 <li><a href="#">Categories <span class="arrow">⌄</span></a></li>
             </ul>
         </div>
 
@@ -128,7 +128,24 @@
 
      
         <main class="content">
-       
+  
+<div class="filter-sidebar ">
+    <div style="display: flex; justify-content: center;">
+        <h2>Filters</h2>
+    </div>
+    <ul>
+        <ul>
+            <li>Type <span>+</span></li>
+            <hr>
+            <li>Size <span>+</span></li>
+            <hr>
+            <li>Color <span>+</span></li>
+            <hr>
+            <li>Price <span>+</span></li>
+        </ul>
+    </ul>
+</div>
+
 
             <div class="sale-banner">
                 <h1>SALE <span>50%</span></h1>
@@ -143,6 +160,7 @@
     </div>
     <script src="js/products_Page.js"></script>
     <script src="js/home_Page.js"></script>
+  
 
 </body>
 

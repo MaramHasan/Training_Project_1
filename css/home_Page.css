@@ -10,7 +10,7 @@
 .container {
     display: flex;
     width: 100%;
-    padding: 20px;
+  
 }
 
 
@@ -20,7 +20,12 @@
     padding: 20px;
     background: white;
     border: 3px solid black;
-    height: 300px;
+    height: 330px;
+}
+.forhref{
+  
+text-decoration: none;
+    color: black;
 }
 .quickshop{
     margin:3px 0 5px 0;
@@ -32,7 +37,34 @@
     text-transform: uppercase;
     margin-bottom: 15px;
 }
+.filter-sidebar h2 {
+    font-size: 22px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+.hidden-swatch {
+    display: none;
+}
+.arrow{
+    position: absolute;
+        top: 3px;
+        right: 0px;
+}
+.toggle-swatches {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 5px;
+    cursor: pointer;
+    display: block;
+    width: fit-content;
+}
 
+.toggle-swatches:hover {
+    background-color: #0056b3;
+}
 .filters ul {
     list-style: none;
 }
@@ -54,7 +86,28 @@ height: 0px;
     font-weight: bold;
 }
 
+.filter-sidebar ul {
+    list-style: none;
+}
 
+.filter-sidebar hr {
+    height: 0px;
+}
+
+.filter-sidebar li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    padding: 12px 0;
+
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.filter-sidebar li span {
+    font-size: 22px;
+    font-weight: bold;
+}
 .content {
     width: 80%;
     padding-left: 40px;
@@ -102,7 +155,6 @@ height: 0px;
     background: #ffd700;
 }
 
-
 .products-title {
     font-size: 24px;
     font-weight: bold;
@@ -129,9 +181,25 @@ height: 0px;
     display: none;
 
 }
+.filter-sidebar{
+    display: none;
+}
 @media (max-width: 768px) {
+    .filter-sidebar {
+        padding: 5px;
+        border: 2px solid black;
+        color: #0c2d56;
+            display: block;
+            margin: 5px;
+        }
+    .content {
+            width: 100%;
+        padding: 0;}
+                        .products-title{
+                            text-align: left;
+                        }
     .filters {
-        
+        display: none;
             width: 20%;
             padding: 3px;
             
@@ -236,4 +304,24 @@ height: 0px;
     display: flex;
     gap: 5px;
     justify-content: flex-start;
+}
+#home-search {
+    padding: 15px;
+    font-size: 16px;
+    width: 300px;
+    max-width: 500px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#home-search:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+.selected{
+    border:3px solid black;
 }
