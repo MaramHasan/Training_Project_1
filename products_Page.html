@@ -94,7 +94,7 @@
 
     <div class="navbar-top">
         <div class="search-bar">
-            <input type="text" placeholder="Search">
+            <input type="text" placeholder="Search" id="search-s">
             <i>🔍</i>
         </div>
     </div>
@@ -103,7 +103,11 @@
         <ul id="menu-list">
             <li><a href="home_page.html">Home</a></li>
             <li class="dropdown-trigger" id="productsLink">
-                <a href="#">Products ></a>
+              <div style="display: flex;
+              justify-content: space-between;
+              align-items: center;
+              width: 100%;
+              "><a href="#">Products </a><span style="color: white;">></span></div>
             </li>
             <li><a href="#">Goods</a></li>
             <li><a href="#">About</a></li>
@@ -118,7 +122,11 @@
             <div class="thumbnail-container" id="thumbnail-container"></div>
         </div>
         <div class="details-section">
-            <h1 id="product-name"></h1>
+        <div style="display: flex;align-items: center; height: 200px;">
+            <button class="forleftarrow" id="lefta" onclick="movtoright()">></button>
+           </div>
+           <div>
+            <h2 id="product-name" style=""></h2>
             <p class="price" id="product-price"></p>
             <div class="swatches" id="swatches-container"></div>
             <div class="cart-container" style="display: flex;">
@@ -126,11 +134,11 @@
                     <button onclick="decrement()">-</button>
                     <span id="quantity">1</span>
                     <button onclick="increment()">+</button>
-
+            
                 </div>
                 <button class="add-to-cart">ADD TO CART</button>
             </div>
-
+            
             <div class="add-to-list">ADD TO LIST</div>
             <div class="details">
                 <div style="display: flex;justify-content: space-between;">
@@ -154,7 +162,11 @@
                 </div>
                 <hr>
             </div>
-        </div>
+            </div>
+            <div style="display: flex;align-items: center; height: 200px;">
+                <button class="forleftarrow" id="righta" onclick="movtoleft()"><</button>
+            </div>
+           </div>
     </div>
 
 

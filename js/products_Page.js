@@ -208,9 +208,11 @@ var obj = {
         }
     ]
 };
-
-
+let images=[];
+let imgindex=0;
 function loadProductDetails(productIndex) {
+    imgindex=0;
+    images = [];
     var product = obj.results[productIndex];
     document.getElementById("main-img").src = product.productImg || "default-image.jpg";
     document.getElementById("product-name").textContent = product.productName;
@@ -223,15 +225,17 @@ function loadProductDetails(productIndex) {
     var allSwatches = [];
 
     if (product.productImg) {
+
         var mainSwatch = document.createElement("img");
         mainSwatch.className = "swatch";
         mainSwatch.src = product.productImg;
         mainSwatch.onclick = function () {
             document.getElementById("main-img").src = product.productImg;
+            
         };
         swatchesContainer.appendChild(mainSwatch);
     }
-
+    images.push(document.getElementById("main-img").src);
     product.swatches.forEach(function (swatch, index) {
         var swatchElement = document.createElement("img");
         swatchElement.className = "swatch";
@@ -242,6 +246,7 @@ function loadProductDetails(productIndex) {
             document.getElementById("main-img").src = swatch.img.src || "default-image.jpg";
         };
         allSwatches.push(swatchElement);
+        images.push(swatchElement.src);
         if (index < maxVisible) {
             swatchesContainer.appendChild(swatchElement);
         }
@@ -277,8 +282,53 @@ function loadProductDetails(productIndex) {
         };
         thumbnailContainer.appendChild(thumbnailElement);
     });
+    document.getElementById('righta').style.display = 'none';
+    document.getElementById('lefta').style.display = 'block';
 }
+function movtoright() {
 
+    let mainImg = document.getElementById('main-img');
+    if (images.length==2){
+        document.getElementById('lefta').style.display = 'none';
+        document.getElementById('righta').style.display = 'block'; 
+        mainImg.src = images[1]
+    }
+   else if (imgindex == images.length - 2) {
+        mainImg.src = images[images.length - 1]
+        document.getElementById('lefta').style.display = 'none';
+        imgindex++;
+    } else {
+        imgindex++
+        mainImg.src = images[imgindex]
+        if(imgindex>0){
+            document.getElementById('righta').style.display = 'block'; 
+        }
+    }
+
+
+}
+function movtoleft() {
+
+    let mainImg = document.getElementById('main-img');
+    if (images.length == 2) {
+        document.getElementById('righta').style.display = 'none';
+        document.getElementById('lefta').style.display = 'block'; 
+        mainImg.src = images[0]
+    }
+    else if (imgindex == images.length - 1) {
+        mainImg.src = images[images.length - 2]
+        document.getElementById('lefta').style.display = 'block';
+        imgindex--;
+    } else {
+        imgindex--;
+        if(imgindex==0){
+            document.getElementById('righta').style.display = 'none';
+        }
+        mainImg.src = images[imgindex];
+    }
+
+
+}
 function increment() {
     let quantity = document.getElementById('quantity');
     quantity.textContent = parseInt(quantity.textContent) + 1;
@@ -292,7 +342,13 @@ function decrement() {
 }
 
 window.onload = function () {
-    loadProductDetails(0);
+    const urlParams = new URLSearchParams(window.location.search);
+    const product = urlParams.get('id');
+
+    if (product) { loadProductDetails(product); }
+  else{
+        loadProductDetails(0);
+  }
 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -327,29 +383,55 @@ document.addEventListener("DOMContentLoaded", function () {
         changeMenuContent("products");
     });
 });
+document.getElementById("search-s").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        var searchValue = this.value.toLowerCase();
+        var filteredProducts = obj.results.filter(product =>
+            product.productName.toLowerCase().includes(searchValue)
+        );
+
+        var thumbnailContainer = document.getElementById("thumbnail-container");
+        thumbnailContainer.innerHTML = '';
+
+        filteredProducts.forEach((product, index) => {
+            var thumbnailElement = document.createElement("img");
+            thumbnailElement.className = "thumbnail";
+            thumbnailElement.src = product.productImg || "default-thumbnail.jpg";
+            thumbnailElement.onclick = function () {
+                loadProductDetails(obj.results.indexOf(product));
+            };
+            thumbnailContainer.appendChild(thumbnailElement);
+        });
+
+        if (filteredProducts.length > 0) {
+            loadProductDetails(obj.results.indexOf(filteredProducts[0]));
+        }
+    }
+});
 
 
-document.getElementById("search").addEventListener("input", function () {
-    if (this.value.length > 0) {
-    var searchValue = this.value.toLowerCase();
-    var filteredProducts = obj.results.filter(product =>
-        product.productName.toLowerCase().includes(searchValue)
-    );
+document.getElementById("search").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        var searchValue = this.value.toLowerCase();
+        var filteredProducts = obj.results.filter(product =>
+            product.productName.toLowerCase().includes(searchValue)
+        );
 
-    var thumbnailContainer = document.getElementById("thumbnail-container");
-    thumbnailContainer.innerHTML = '';
+        var thumbnailContainer = document.getElementById("thumbnail-container");
+        thumbnailContainer.innerHTML = '';
 
-    filteredProducts.forEach((product, index) => {
-        var thumbnailElement = document.createElement("img");
-        thumbnailElement.className = "thumbnail";
-        thumbnailElement.src = product.productImg || "default-thumbnail.jpg";
-        thumbnailElement.onclick = function () {
-            loadProductDetails(obj.results.indexOf(product));
-        };
-        thumbnailContainer.appendChild(thumbnailElement);
-    });
+        filteredProducts.forEach((product, index) => {
+            var thumbnailElement = document.createElement("img");
+            thumbnailElement.className = "thumbnail";
+            thumbnailElement.src = product.productImg || "default-thumbnail.jpg";
+            thumbnailElement.onclick = function () {
+                loadProductDetails(obj.results.indexOf(product));
+            };
+            thumbnailContainer.appendChild(thumbnailElement);
+        });
 
-    if (filteredProducts.length > 0) {
-        loadProductDetails(obj.results.indexOf(filteredProducts[0]));
-    }}
+        if (filteredProducts.length > 0) {
+            loadProductDetails(obj.results.indexOf(filteredProducts[0]));
+        }
+    }
 });
