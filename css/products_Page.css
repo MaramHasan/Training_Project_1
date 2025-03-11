@@ -4,12 +4,33 @@
       box-sizing: border-box;
 
   }
+#suggestion-container,
+#suggestioncontainer {
+    display: none;
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    width: 400px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+}
 
+.suggestion {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    color: black;
+}
+
+.suggestion:hover {
+    background-color: #f0f0f0;
+}
 
   .navbar {
       background-color: #002233;
       color: white;
-      padding: 15px 20px 0px 20px;
+      padding-top: 15px;
       width: 100%;
   }
 
@@ -40,13 +61,33 @@
     position: absolute;
     top: 3px;
     right: 0px;
+    
+}
+
+.dropdown-overlay {
+    position: fixed;
+    top: 90px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10;
+    display: none;
+}
+
+.dropdown-overlay.active {
+    display: block;
+}
+
+.dropdown.active {
+    z-index: 11;
 }
 
   .dropdown {
       display: none;
       position: fixed;
 
-      top: 120px;
+      top: 94px;
 
       left: 0;
       width: 100vw;
@@ -71,16 +112,29 @@
   }
 
   .dropdown .column h3 {
-      font-size: 16px;
+      font-size: 20px;
       font-weight: bold;
       margin-bottom: 10px;
+      padding: 15px 15px 0 15px;
   }
 
+
+
+.dropdown .column a:hover .arrow:hover {
+    transform: rotate(180deg);
+    top: 17px;
+}
+
+.dropdown .column a:hover .arrow2 {
+    transform: rotate(180deg);
+
+}
   .dropdown .column a {
+    font-size: 20px;
       display: block;
       color: black;
       text-decoration: none;
-      padding: 5px 0;
+      padding: 10px ;
   }
 
   .dropdown .column a:hover {
@@ -135,20 +189,37 @@
 
   .details-section {
 display: flex;
-      width: 400px;
+justify-self: center;
+      width: 350px;
 
   }
-.forleftarrow{
-     background-color: transparent;
-     margin-right: 10px;
-     height: 40px;
-     width: 40px;
-     border-radius: 50%;
-     border: 1px solid gray;
-     cursor: pointer;
+.forleftarrow {
+    background-color: rgba(255, 255, 255, 0.4);
+    margin-right: 10px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 1px solid gray;
+    cursor: pointer;
+    position: relative;
+    top: -15px;
+    left: -45px;
+}
+.forleftarrow2 {
+    background-color: rgba(255, 255, 255, 0.4);
+
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 1px solid gray;
+    cursor: pointer;
+
 }
   .details {
       height: 300px;
+  
+            width: 380px;
+        
   }
 
   .details div {
@@ -169,8 +240,9 @@ display: flex;
   }
 
   .price {
+    margin: 10px 0;
       font-size: 12px;
-      display: inline;
+    
   }
 
   .cart-controls {
@@ -238,15 +310,17 @@ display: flex;
       text-align: center;
   }
 .toggle-button {
-  
-    margin-top: 10px;
-    padding: 5px 10px;
+  font-size: 13px;
     background-color: transparent;
     color: gray;
     border: none;
     cursor: pointer;
 }
-
+.swatch-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .toggle-button:hover {
     color: rgb(86, 85, 85);
 }
@@ -290,14 +364,15 @@ display: flex;
   .thumbnail-container {
       width: 100%;
       display: flex;
+      justify-content: center;
       flex-wrap: wrap;
-      justify-content: flex-end;
+  
   }
 
   #search {
-      padding: 15px;
-      font-size: 16px;
-      width: 300px;
+padding: 3px;
+    font-size: 16px;
+    width: 400px;
       max-width: 500px;
       border: 2px solid #007bff;
       border-radius: 8px;
@@ -347,7 +422,7 @@ display: flex;
                 font-weight: bold;
             }
     
-            .navbar-top .search-bar {
+         .search-bar {
                 flex: 1;
                 margin: 0 20px;
                 display: flex;
@@ -360,7 +435,7 @@ display: flex;
             }
     
     
-            .navbar-top .search-bar input {
+            .search-bar input {
                 border: none;
                 outline: none;
                 flex: 1;
@@ -418,6 +493,7 @@ display: flex;
                 color: black;
                 justify-content: space-around;
                 flex-wrap: wrap;
+               
                 z-index: 1000;
             }
     
@@ -517,8 +593,154 @@ display: flex;
                 width: 100%;
     
             }
+.container {
+    width: 100%;
+     }
+.imageedit{
+    width: 88%;
+}
 
-                        .container {
+     #search-s{
+           width: 91%;
+           padding: 3px;
+            border: 2px solid #007bff;
+            border-radius: 8px;
+     }
+     #search-s:focus{
+        
+        border: 2px solid #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+
+
+
+
+.selected {
+border: 3px solid black;
+  }
+#suggestioncontainer{
+    width: 83%;
+}
+}
+.swatches{
+    display: flex;
+    flex-wrap: wrap;
+   
+}
+
+
+                
+                               
+
+
+
+
+
+
+
+.toggle-container {
+    text-align: center;
+    margin: 10px 0;
+}
+.selected{
+    border: 3px solid black;
+}
+.separator-line {
+    width: 100%;
+    height: 2px;
+    background-color: #ccc;
+
+}
+
+
+
+
+
+.thumbnail-container {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: 300px;
+ 
+}
+
+.thumbnails-wrapper {
+    overflow: hidden;
+    width: 80px;
+ 
+    cursor: grab;
+}
+
+.thumbnails {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+    user-select: none;
+    
+}
+
+.thumbnail {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.forleftarrow2 {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+
+
+
+          .thumbnail-container {
+              display: flex;
+              align-items: center;
+              position: relative;
+              overflow: hidden;
+              width: 300px;
+          }
+    
+          .lefta2,
+          .righta2 {
+              background: none;
+              border: none;
+              font-size: 30px;
+              cursor: pointer;
+          }
+    
+          .thumbnails-wrapper {
+              width: 170px;
+              overflow: hidden;
+              cursor: grab;
+          }
+    
+          .thumbnails {
+    
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              transition: transform 0.3s ease-in-out;
+          }
+    
+          .thumbnail {
+              width: 100px;
+              height: 100px;
+              object-fit: cover;
+              border-radius: 8px;
+          }
+
+
+
+
+                   @media (max-width: 510px) {
+                    .imageedit {
                             width: 100%;
                         }
-        }
+                   }
