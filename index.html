@@ -16,7 +16,9 @@
         <div class="navbar">
             <div class="forlogos">
                 <div class="logo">MY SHOP</div>
-                <div><input type="text" placeholder="Search" id="home-search"> 🔎</div>
+            <div><input type="text" placeholder="Search" id="search"> 🔎
+                <div id="suggestion-container"></div>
+            </div>
                 <div class="icons">
         
                     <i>❤️</i>
@@ -24,13 +26,12 @@
                     <i>👤</i>
                 </div>
             </div>
-            <div class="forlinks">
-        
+
                 <ul class="nav-links">
-                    <li><a href="#">Home</a></li>
-                    <li class="dropdown-trigger" data-dropdown="productsDropdown">
-                        <a href="products_Page.html">Products <span class="arrow">⌄</span></a>
-                        <div id="productsDropdown" class="dropdown" >
+                    <li><a href="home_page.html">Home</a></li>
+                    <li class="dropdown-trigger" data-dropdown="productsDropdown" id="forprod1">
+                        <a href="#">Products <span class="arrow" id="prod1">⌄</span></a>
+                        <div id="productsDropdown" class="dropdown">
                             <div class="column">
                                 <h3>2.1 PAGE LINK HEADER</h3>
                                 <a href="#">2.1.1 Page link</a>
@@ -53,8 +54,8 @@
                     <li><a href="#">Goods</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact</a></li>
-                    <li class="dropdown-trigger" data-dropdown="categoriesDropdown">
-                        <a href="#">Categories  <span class="arrow">⌄</span></a>
+                <li class="dropdown-trigger" data-dropdown="categoriesDropdown" id="forcat">
+                    <a href="#">Categories <span class="arrow" id="cat">⌄</span></a>
                         <div id="categoriesDropdown" class="dropdown">
                             <div class="column">
                                 <h3>3.1 CATEGORY LINK HEADER</h3>
@@ -76,9 +77,8 @@
                         </div>
                     </li>
                 </ul>
-            </div>
-        </div>
-        
+                </div>
+                </div>
         
         <div class="navbar-top">
             <div class="logo">MY SHOP</div>
@@ -93,21 +93,19 @@
         </div>
         
         <div class="navbar-top">
-            <div class="search-bar">
-                <input type="text" placeholder="Search" id="s-search">
-                <i>🔍</i>
+            <div style="width: 100%;"><input type="text" placeholder="Search" id="s-search"> 🔎
+                <div id="suggestioncontainer"></div>
             </div>
+        
         </div>
         
         <div class="navbar-bottom">
             <ul id="menu-list">
                 <li><a href="#">Home</a></li>
-                <li class="dropdown-trigger" id="productsLink">
-                    <a href="products_Page.html">Products ></a>
-                </li>
+                <li class="dropdown-trigger"><a href="#" onclick="changeMenuContent('products')">Products <span style="color: white;">></span></a></li>
                 <li><a href="#">Goods</a></li>
                 <li><a href="#">About</a></li>
-                 <li><a href="#">Categories <span class="arrow">⌄</span></a></li>
+                <li><a href="#">Categories <span class="arrow2">⌄</span></a></li>
             </ul>
         </div>
 
@@ -154,11 +152,12 @@
             </div>
 
          
-            <h2 class="products-title">Products</h2>
+            <h2 class="products-title" style="width: 100%;">Products</h2>
             <div class="products" id="products-container"></div>
         </main>
     </div>
-    <script src="js/products_Page.js"></script>
+        <script src="js/json.js"></script>
+ 
     <script src="js/home_Page.js"></script>
   
 
