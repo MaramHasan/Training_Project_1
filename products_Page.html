@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="css/products_Page.css">
 
 
-
 </head>
 
 <body>
@@ -16,7 +15,9 @@
     <div class="navbar">
 <div class="forlogos">
     <div class="logo">MY SHOP</div>
-  <div><input type="text" placeholder="Search" id="search"> 🔎</div>
+  <div><input type="text" placeholder="Search" id="search"> 🔎
+<div id="suggestion-container"></div></div>
+  
     <div class="icons">
       
         <i>❤️</i>
@@ -28,8 +29,8 @@
           
         <ul class="nav-links">
             <li><a href="home_page.html">Home</a></li>
-            <li class="dropdown-trigger" data-dropdown="productsDropdown">
-                <a href="#">Products <span class="arrow">⌄</span></a>
+            <li class="dropdown-trigger" data-dropdown="productsDropdown" id="forprod">
+                <a href="#" style="margin-right: 3px;">Products <span class="arrow" id="prod">⌄</span></a>
                 <div id="productsDropdown" class="dropdown">
                     <div class="column">
                         <h3>2.1 PAGE LINK HEADER</h3>
@@ -53,8 +54,8 @@
             <li><a href="#">Goods</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
-            <li class="dropdown-trigger" data-dropdown="categoriesDropdown">
-                <a href="#">Categories <span class="arrow">⌄</span></a>
+            <li class="dropdown-trigger" data-dropdown="categoriesDropdown" id="forcat1">
+                <a href="#" style="margin-right: 3px;">Categories <span class="arrow" id="cat1">⌄</span></a>
                 <div id="categoriesDropdown" class="dropdown">
                     <div class="column">
                         <h3>3.1 CATEGORY LINK HEADER</h3>
@@ -93,22 +94,19 @@
     </div>
 
     <div class="navbar-top">
-        <div class="search-bar">
-            <input type="text" placeholder="Search" id="search-s">
-            <i>🔍</i>
-        </div>
+    <div style="width: 100%;"><input type="text" placeholder="Search" id="search-s"> 🔎
+        <div id="suggestioncontainer"></div>
     </div>
+       
+        </div>
+   
 
     <div class="navbar-bottom">
         <ul id="menu-list">
             <li><a href="home_page.html">Home</a></li>
-            <li class="dropdown-trigger" id="productsLink">
-              <div style="display: flex;
-              justify-content: space-between;
-              align-items: center;
-              width: 100%;
-              "><a href="#">Products </a><span style="color: white;">></span></div>
-            </li>
+
+        <li class="dropdown-trigger"><a href="#" onclick="changeMenuContent('products')">Products <span
+                    style="color: white;">></span></a></li>
             <li><a href="#">Goods</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
@@ -116,61 +114,99 @@
         </ul>
     </div>
 
-    <div class="container">
+    <div class="container" id="cont">
+    <div class="imageedit" style="display:flex; justify-content:center; align-items:center">
+                    <button class="forleftarrow" id="righta" onclick="movtoleft()" style="left:55px">
+                        <</button>
+
         <div class="image-section">
+         
             <div class="mmm"> <img id="main-img" src="" alt="Product Image"></div>
-            <div class="thumbnail-container" id="thumbnail-container"></div>
+       
+              
+        
+                <div class="thumbnail-container" id="thumbnail-container">
+                    <button class="lefta2" id="lefta2" onclick="movetoleft2()">&lt;</button>
+                
+                    <div class="thumbnails-wrapper">
+                        <div class="thumbnails" id="thumbnails">
+                        </div>
+                    </div>
+                
+                    <button class="righta2" id="righta2" onclick="movetoright2()">&gt;</button>
+                </div>
+                
+               
+                
+            
+
+
         </div>
+        <button class="forleftarrow" id="lefta" onclick="movtoright()"  >
+            ></button>
+    </div>
         <div class="details-section">
         <div style="display: flex;align-items: center; height: 200px;">
-            <button class="forleftarrow" id="lefta" onclick="movtoright()">></button>
+  
            </div>
-           <div>
-            <h2 id="product-name" style=""></h2>
-            <p class="price" id="product-price"></p>
-            <div class="swatches" id="swatches-container"></div>
-            <div class="cart-container" style="display: flex;">
-                <div class="quantity-container">
-                    <button onclick="decrement()">-</button>
-                    <span id="quantity">1</span>
-                    <button onclick="increment()">+</button>
+
+
+           <div style="display: flex; align-items: center;">
+            <div>
+               <div class="tocent">
+               <div>
+                <h2 id="product-name"></h2>
+                <p class="price" id="product-price"></p>
+                <p class="price" id="price"></p>
+               </div>
+               </div>
+                <div class="swatches" id="swatches-container"></div>
+                <div class="cart-container" style="display: flex;">
+                    <div class="quantity-container">
+                        <button onclick="decrement()">-</button>
+                        <span id="quantity">1</span>
+                        <button onclick="increment()">+</button>
             
+                    </div>
+                    <button class="add-to-cart">ADD TO CART</button>
                 </div>
-                <button class="add-to-cart">ADD TO CART</button>
-            </div>
             
-            <div class="add-to-list">ADD TO LIST</div>
-            <div class="details">
-                <div style="display: flex;justify-content: space-between;">
-                    <p>PRODUCTS DETAILS</p>
-                    <p>+</p>
+                <div class="add-to-list">ADD TO LIST</div>
+                <div class="details">
+                    <div style="display: flex;justify-content: space-between;">
+                        <p>PRODUCTS DETAILS</p>
+                        <p>+</p>
+                    </div>
+                    <hr>
+                    <div style="display: flex;justify-content: space-between;">
+                        <p>FREE SHIPPING IN THE CONTIGUOUS US</p>
+                        <p>+</p>
+                    </div>
+                    <hr>
+                    <div style="display: flex;justify-content: space-between;">
+                        <p>FREE RETURNS WITHIN 30 DAYS</p>
+                        <p>+</p>
+                    </div>
+                    <hr>
+                    <div style="display: flex;justify-content: space-between;">
+                        <p>QUALITY CERTIFICATIONS</p>
+                        <p>+</p>
+                    </div>
+                    <hr>
                 </div>
-                <hr>
-                <div style="display: flex;justify-content: space-between;">
-                    <p>FREE SHIPPING IN THE CONTIGUOUS US</p>
-                    <p>+</p>
-                </div>
-                <hr>
-                <div style="display: flex;justify-content: space-between;">
-                    <p>FREE RETURNS WITHIN 30 DAYS</p>
-                    <p>+</p>
-                </div>
-                <hr>
-                <div style="display: flex;justify-content: space-between;">
-                    <p>QUALITY CERTIFICATIONS</p>
-                    <p>+</p>
-                </div>
-                <hr>
             </div>
-            </div>
+           </div>
             <div style="display: flex;align-items: center; height: 200px;">
-                <button class="forleftarrow" id="righta" onclick="movtoleft()"><</button>
+           
             </div>
            </div>
     </div>
-
+    <script src="js/json.js"></script>
 
     <script src="js/products_Page.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
 </body>
 
 </html>
