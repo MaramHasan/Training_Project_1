@@ -17,7 +17,8 @@ function renderCart() {
         totalAmount += item.price;
         cartItems.innerHTML += `
                     <div class="cart-item">
-                        <img src="${item.img}" alt="${item.name}">
+                        <div style="
+    height: 90px;"><img src="${item.img}" alt="${item.name}"></div>
                         <div style="flex:7">
                             <strong>${item.name}</strong><br>
                             Swatch: ${item.swatch}<br>
@@ -52,7 +53,14 @@ document.getElementById("cart-popup").addEventListener("mouseleave", () => {
     document.getElementById("cart-overlay").style.display = "none";
     document.getElementById("cart-popup").style.display = "none";
 });
-
+function hideall(){
+  
+    document.getElementById("cart-overlay").style.display = "none";
+    document.getElementById("dialog-overlay").style.display = "none";
+    document.getElementById("cart-popup").style.display = "none";
+    document.getElementById("confirmDialog").style.display = "none";
+  
+}
 function openConfirmDialog(index) {
     itemToRemove = index;
     document.getElementById("dialog-overlay").style.display = "block";

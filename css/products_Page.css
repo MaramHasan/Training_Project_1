@@ -37,6 +37,7 @@
   .logo {
       font-size: 20px;
       font-weight: bold;
+    margin-left: 100px;
   }
 
   .nav-links {
@@ -141,7 +142,9 @@
       color: #007BFF;
   }
 
-
+.icons{
+    margin-right: 100px;
+}
   .icons i {
       margin-left: 15px;
       cursor: pointer;
@@ -420,6 +423,7 @@ padding: 3px;
             .navbar-top .logo {
                 font-size: 22px;
                 font-weight: bold;
+               
             }
     
          .search-bar {
@@ -737,9 +741,23 @@ border: 3px solid black;
           }
 
 
-
+.det{
+    display: flex;
+        align-items: center;
+}
 
                    @media (max-width: 510px) {
+                    .details{
+                        width: 328px;
+                        height: auto;
+                    }
+                    .det{
+                        padding-left: 20px;
+                    }
+                    .container{
+                        padding: 20px 0 0 0;
+         
+                    }
                     .imageedit {
                             width: 100%;
                         }
