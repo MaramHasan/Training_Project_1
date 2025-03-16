@@ -8,10 +8,53 @@
 
     <link rel="stylesheet" href="css/products_Page.css">
 <link rel="stylesheet" href="css/home_Page.css">
+<link rel="stylesheet" href="css/cart.css">
 
 </head>
 
 <body>
+<div class="cart-overlay" id="cart-overlay"></div>
+<div class="cart-overlay" id="dialog-overlay"></div>
+<div class="cart-popup" id="cart-popup">
+    <div class="cart-arrow"></div>
+    <div style="display: flex; justify-content: space-between;">
+        <div>
+            <h2>YOUR CART (<span id="cartCount"></span>)</h2>
+        </div>
+        <div>
+            <span style="cursor:pointer;">VIEW CART</span>
+        </div>
+    </div>
+    <div class="cart-items-wrapper" id="cartItems"></div>
+    <div class="cart-footer">
+        <span>Estimated Total</span>
+        <span id="totalAmount">$0</span>
+    </div>
+    <div style="display: flex;width: 100%;justify-content: center;"><button class="checkout-btn">Checkout</button>
+    </div>
+</div>
+
+
+<div class="confirm-dialog" id="confirmDialog">
+    <div style="width: 100%; display: flex;justify-content: space-between;">
+        <div>Remove Item ?</div>
+        <div style="color: gray; cursor: pointer;" onclick="closeDialog()">X</div>
+    </div>
+    <div style="width: 100%; padding: 10px;">
+
+        <p>Are you sure you want to remove the following product
+            from the cart?</p>
+        <div style="width: 95%;">
+            <hr>
+        </div>
+
+    </div>
+
+    <div style="display: flex;width: 100%;justify-content: center;"><button class="no"
+            onclick="closeDialog()">Cancel</button>
+        <button class="yes" onclick="confirmRemove()">Yes</button>
+    </div>
+</div>
 
         <div class="navbar">
             <div class="forlogos">
@@ -22,7 +65,7 @@
                 <div class="icons">
         
                     <i>❤️</i>
-                    <i>🛒</i>
+                    <i id="cart-icon">🛒</i>
                     <i>👤</i>
                 </div>
             </div>
@@ -159,6 +202,7 @@
         <script src="js/json.js"></script>
  
     <script src="js/home_Page.js"></script>
+    <script src="js/cart.js"></script>
   
 
 </body>
