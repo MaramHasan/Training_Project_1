@@ -14,8 +14,8 @@
 <body>
 
 
-    <div class="cart-overlay" id="cart-overlay"></div>
-    <div class="cart-overlay" id="dialog-overlay"></div>
+<div class="cart-overlay" id="cart-overlay" onclick="hideall()"></div>
+<div class="cart-overlay" id="dialog-overlay" onclick="hideall()"></div>
     <div class="cart-popup" id="cart-popup">
         <div class="cart-arrow"></div>
         <div style="display: flex; justify-content: space-between;">
@@ -23,7 +23,7 @@
                 <h2>YOUR CART (<span id="cartCount"></span>)</h2>
             </div>
             <div>
-                <span style="cursor:pointer;">VIEW CART</span>
+                <h2 style="font-weight: 100;"><span style="cursor:pointer;">VIEW CART</span></h2>
             </div>
         </div>
         <div class="cart-items-wrapper" id="cartItems"></div>
@@ -197,8 +197,7 @@
   
            </div>
 
-
-           <div style="display: flex; align-items: center;">
+           <div  class="det">
             <div>
                <div class="tocent">
                <div>
