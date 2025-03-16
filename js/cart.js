@@ -40,6 +40,8 @@ function renderCart() {
 }
 
 document.getElementById("cart-icon").addEventListener("mouseenter", () => {
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
     document.getElementById("cart-popup").style.display = "flex";
     document.getElementById("cart-overlay").style.display = "block";
 });
@@ -50,11 +52,14 @@ document.getElementById("cart-overlay").addEventListener("click", () => {
 });
 
 document.getElementById("cart-popup").addEventListener("mouseleave", () => {
+    document.body.style.overflow = "auto"; 
+    document.documentElement.style.overflow = "auto"; 
     document.getElementById("cart-overlay").style.display = "none";
     document.getElementById("cart-popup").style.display = "none";
 });
 function hideall(){
-  
+    document.body.style.overflow = "auto"; 
+    document.documentElement.style.overflow = "auto"; 
     document.getElementById("cart-overlay").style.display = "none";
     document.getElementById("dialog-overlay").style.display = "none";
     document.getElementById("cart-popup").style.display = "none";
@@ -62,14 +67,21 @@ function hideall(){
   
 }
 function openConfirmDialog(index) {
+   
     itemToRemove = index;
     document.getElementById("dialog-overlay").style.display = "block";
     document.getElementById("confirmDialog").style.display = "block";
     document.getElementById("cart-popup").style.display = "none";
+  setTimeout(function(){
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+  },50)
 
 }
 
 function closeDialog() {
+    document.body.style.overflow = "auto"; 
+    document.documentElement.style.overflow = "auto";
     document.getElementById("dialog-overlay").style.display = "none";
     document.getElementById("confirmDialog").style.display = "none";
     document.getElementById("cart-overlay").style.display = "none";
@@ -77,6 +89,7 @@ function closeDialog() {
 }
 
 function confirmRemove() {
+    document.body.style.overflow = "auto"; 
     if (itemToRemove !== null) {
         cart.splice(itemToRemove, 1);
         renderCart();
