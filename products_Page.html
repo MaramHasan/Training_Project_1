@@ -16,30 +16,36 @@
 
 <div class="cart-overlay" id="cart-overlay" onclick="hideall()"></div>
 <div class="cart-overlay" id="dialog-overlay" onclick="hideall()"></div>
-    <div class="cart-popup" id="cart-popup">
-        <div class="cart-arrow"></div>
-        <div style="display: flex; justify-content: space-between;">
-            <div>
-                <h2>YOUR CART (<span id="cartCount"></span>)</h2>
-            </div>
-            <div>
-                <h2 style="font-weight: 100;"><span style="cursor:pointer;">VIEW CART</span></h2>
-            </div>
+<div class="cart-popup" id="cart-popup">
+    <div class="cart-arrow"></div>
+    <div style="display: flex; justify-content: space-between;">
+        <div>
+            <h2>YOUR CART (<span id="cartCount"></span>)</h2>
         </div>
-        <div class="cart-items-wrapper" id="cartItems"></div>
-        <div class="cart-footer">
-            <span>Estimated Total</span>
-            <span id="totalAmount">$0</span>
-        </div>
-        <div style="display: flex;width: 100%;justify-content: center;"><button class="checkout-btn">Checkout</button>
-        </div>
+    <div style="display: flex
+;">
+        <span style="cursor:pointer; display: flex;justify-content: center;align-items: center;"><a href="cart_Page.html"
+                style="
+                    text-decoration: none;;
+                    color: black;">VIEW CART</a></span>
     </div>
+    </div>
+    <div class="cart-items-wrapper" id="cartItems"></div>
+    <div class="cart-footer">
+        <span>Estimated Total</span>
+        <span id="totalAmount">$0</span>
+    </div>
+    <div style="display: flex;width: 100%;justify-content: center;"><button class="checkout-btn"
+            id="checkout">Checkout</button>
+    </div>
+</div>
+
 
 
 <div class="confirm-dialog" id="confirmDialog">
     <div style="width: 100%; display: flex;justify-content: space-between;">
         <div>Remove Item ?</div>
-        <div style="color: gray; cursor: pointer;" onclick="closeDialog()">X</div>
+        <div style="color: rgb(128,128,128); cursor: pointer;" onclick="closeDialog()">X</div>
     </div>
     <div style="width: 100%; padding: 10px;">
 
@@ -214,7 +220,7 @@
                         <button onclick="increment()">+</button>
             
                     </div>
-                    <button class="add-to-cart">ADD TO CART</button>
+                    <button class="add-to-cart" id="addtocart">ADD TO CART</button>
                 </div>
             
                 <div class="add-to-list">ADD TO LIST</div>
@@ -247,10 +253,12 @@
             </div>
            </div>
     </div>
-    <script src="js/json.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
 
+    <script src="js/json.js"></script>
+    <script src="js/cart.js"></script>
     <script src="js/products_Page.js"></script>
-        <script src="js/cart.js"></script>
+   
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
