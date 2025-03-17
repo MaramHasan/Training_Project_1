@@ -1,6 +1,6 @@
 const productsLink = document.getElementById("productsLink");
 const menuList = document.getElementById("menu-list");
-
+let ischanged
 function changeMenuContent(category) {
     let newMenuContent = "";
 
@@ -96,9 +96,12 @@ async function loadProductDetails(productIndex) {
     var product = obj.results[productIndex];
 
     let mainImg = document.getElementById("main-img");
+    imgsrctoadd=mainImg.src;
     mainImg.src = product.productImg || "default-image.jpg";
+ 
     document.getElementById("product-name").textContent = product.productName;
     document.getElementById("price").textContent = product.productPriceFormatted;
+    priceofitem = product.productPrice;
     document.getElementById("price").textContent = product.productPriceFormatted;
 
     var swatchesContainer = document.getElementById("swatches-container");
@@ -113,9 +116,14 @@ async function loadProductDetails(productIndex) {
         i++;
         if (index == 0) {
             swatchElement.classList.add('selected');
+          
+            itemname = product.productName;
+            itemswatch = swatch.swatchName;
             document.getElementById("product-price").innerText = product.productName + " " + swatch.swatchName + " selected";
         }
         swatchElement.onclick = function () {
+            itemname = product.productName;
+            itemswatch = swatch.swatchName;
             imgindex = index;
             document.getElementById("product-price").innerText = product.productName + " " + swatch.swatchName + " selected";
             updateArrows();
@@ -135,7 +143,7 @@ async function loadProductDetails(productIndex) {
     formove = allSwatches;
     updateThumbnails(productIndex);
     updateArrows();
-
+    imgsrctoadd = mainImg.src;
 
 }
 
@@ -193,7 +201,7 @@ function updateThumbnails(productIndex, selectedSwatchImg) {
     swatchThumbnail.className = "thumbnail";
     swatchThumbnail.src = selectedSwatchImg || product.productImg;
     images.push(swatchThumbnail.src);
-
+    imgsrctoadd = selectedSwatchImg;
     swatchThumbnail.onclick = function () {
         imgindex = 0;
         updateMainImage(swatchThumbnail.src);
@@ -215,13 +223,9 @@ function updateThumbnails(productIndex, selectedSwatchImg) {
 
         thumbnailContainer.appendChild(imgThumbnail);
     });
-    // let y ='<button class="forleftarrow2" id="righta" onclick="movtoleft()" ><</button>'+
-    //     thumbnailContainer.innerHTML +'<button class="forleftarrow2 tomakeitgo" id="lefta" onclick="movtoright()" >></button>'
-
-    // thumbnailContainer.innerHTML=y;
     updateArrows();
 }
-
+let imgsrctoadd;
 
 
 function updateMainImage(src) {
@@ -291,6 +295,8 @@ function decrement() {
 }
 
 window.onload = async function () {
+    getItemsOfCart();
+    renderCart();
     const urlParams = new URLSearchParams(window.location.search);
     const product = urlParams.get('id');
 
@@ -302,7 +308,9 @@ window.onload = async function () {
 
 else{
     const productIndex = product ? parseInt(product) : 0;
+
         await loadProductDetails(productIndex);
+        
     }
    
 };
@@ -319,12 +327,15 @@ document.addEventListener("DOMContentLoaded", function () {
         const dropdown = document.getElementById(trigger.dataset.dropdown);
 
         trigger.addEventListener("mouseenter", () => {
+             document.documentElement.style.overflow = "hidden";
+          
             dropdown.classList.add("active");
             overlay.classList.add("active");
         });
 
         trigger.addEventListener("mouseleave", () => {
             setTimeout(() => {
+                document.documentElement.style.overflow = "auto";
                 if (!dropdown.matches(":hover") && !trigger.matches(":hover")) {
                     dropdown.classList.remove("active");
                     overlay.classList.remove("active");
@@ -413,54 +424,54 @@ document.getElementById("search").addEventListener("input", debounce(function ()
 
 
 
-document.getElementById("search-s").addEventListener("input", debounce(function () {
-    var searchValue = this.value.toLowerCase();
-    var suggestionContainer = document.getElementById("suggestioncontainer");
-    suggestionContainer.innerHTML = '';
+// document.getElementById("search-s").addEventListener("input", debounce(function () {
+//     var searchValue = this.value.toLowerCase();
+//     var suggestionContainer = document.getElementById("suggestioncontainer");
+//     suggestionContainer.innerHTML = '';
 
-    var filteredProducts = obj.results
-        .map((product, index) => ({ ...product, originalIndex: index }))
-        .filter(product => product.productName.toLowerCase().includes(searchValue));
+//     var filteredProducts = obj.results
+//         .map((product, index) => ({ ...product, originalIndex: index }))
+//         .filter(product => product.productName.toLowerCase().includes(searchValue));
 
-    if (filteredProducts.length > 0) {
-        suggestionContainer.style.display = "block";
+//     if (filteredProducts.length > 0) {
+//         suggestionContainer.style.display = "block";
 
-        filteredProducts.forEach((product) => {
-            var suggestionElement = document.createElement("div");
-            suggestionElement.className = "suggestion";
-            suggestionElement.textContent = product.productName;
+//         filteredProducts.forEach((product) => {
+//             var suggestionElement = document.createElement("div");
+//             suggestionElement.className = "suggestion";
+//             suggestionElement.textContent = product.productName;
 
-            suggestionElement.addEventListener("mousedown", function (event) {
-                event.preventDefault();
+//             suggestionElement.addEventListener("mousedown", function (event) {
+//                 event.preventDefault();
 
-                window.location.href = "./products_Page.html?id=" + product.originalIndex;
+//                 window.location.href = "./products_Page.html?id=" + product.originalIndex;
 
-            });
+//             });
 
-            suggestionContainer.appendChild(suggestionElement);
-        });
-    } else {
-        suggestionContainer.style.display = "none";
-    }
-}, 300));
-
-
+//             suggestionContainer.appendChild(suggestionElement);
+//         });
+//     } else {
+//         suggestionContainer.style.display = "none";
+//     }
+// }, 300));
 
 
 
 
-document.getElementById("search-s").addEventListener("keydown", function (event) {
 
-    if (event.key === "Enter") {
 
-        var searchValue = this.value.toLowerCase();
-        var matchedIndex = obj.results.findIndex(product => product.productName.toLowerCase() == searchValue);
+// document.getElementById("search-s").addEventListener("keydown", function (event) {
 
-        if (matchedIndex != -1) {
-            window.location.href = "./products_Page.html?id=" + matchedIndex;
-        }
-    }
-});
+//     if (event.key === "Enter") {
+
+//         var searchValue = this.value.toLowerCase();
+//         var matchedIndex = obj.results.findIndex(product => product.productName.toLowerCase() == searchValue);
+
+//         if (matchedIndex != -1) {
+//             window.location.href = "./products_Page.html?id=" + matchedIndex;
+//         }
+//     }
+// });
 document.getElementById("search").addEventListener("keydown", function (event) {
 
     if (event.key === "Enter") {
@@ -474,17 +485,17 @@ document.getElementById("search").addEventListener("keydown", function (event) {
     }
 });
 
-document.getElementById("search-s").addEventListener('blur', function (event) {
-    setTimeout(() => {
-        document.getElementById("suggestioncontainer").style.display = "none";
-    }, 200);
-});
-document.getElementById("search-s").addEventListener('focus', function () {
-    var suggestionContainer = document.getElementById("suggestioncontainer");
-    if (suggestionContainer.children.length > 0) {
-        suggestionContainer.style.display = "block";
-    }
-});
+// document.getElementById("search-s").addEventListener('blur', function (event) {
+//     setTimeout(() => {
+//         document.getElementById("suggestioncontainer").style.display = "none";
+//     }, 200);
+// });
+// document.getElementById("search-s").addEventListener('focus', function () {
+//     var suggestionContainer = document.getElementById("suggestioncontainer");
+//     if (suggestionContainer.children.length > 0) {
+//         suggestionContainer.style.display = "block";
+//     }
+// });
 
 
 
@@ -547,3 +558,11 @@ thumbnails.addEventListener("wheel", (e) => {
         movetoleft2();
     }
 });
+let itemname;
+let itemswatch;
+let priceofitem;
+document.getElementById("addtocart").addEventListener("click", function(){
+    let quantity = document.getElementById('quantity');
+  
+    addNewItem(imgsrctoadd, itemname, itemswatch, parseInt(quantity.textContent), priceofitem * parseInt(quantity.textContent));
+})

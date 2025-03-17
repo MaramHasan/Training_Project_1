@@ -1,21 +1,66 @@
-let cart = [
-    { img: 'https://akamai-scene7.garnethill.com/is/image/garnethill/49187_SADD?&defaultImage=49187_main', name: 'Hugo Boss Suit', swatch: 'SADD', quantity: 2, price: 2500 },
-    { img: 'https://akamai-scene7.garnethill.com/is/image/garnethill/49187_SADD?&defaultImage=49187_main', name: 'Hugo Boss Suit', swatch: 'SADD', quantity: 2, price: 2500 },
-    { img: 'https://akamai-scene7.garnethill.com/is/image/garnethill/49187_SADD?&defaultImage=49187_main', name: 'Hugo Boss Suit', swatch: 'SADD', quantity: 2, price: 2500 },
-    { img: 'https://akamai-scene7.garnethill.com/is/image/garnethill/49187_SADD?&defaultImage=49187_main', name: 'Hugo Boss Suit', swatch: 'SADD', quantity: 2, price: 2500 },
-    { img: 'https://akamai-scene7.garnethill.com/is/image/garnethill/49187_SADD?&defaultImage=49187_main', name: 'Hugo Boss Suit', swatch: 'SADD', quantity: 2, price: 2500 },
-    { img: 'img2.jpg', name: 'Hugo Boss Suit', swatch: 'SADD', quantity: 2, price: 2500 },
-    { img: 'img3.jpg', name: 'Hugo Boss Suit', swatch: 'SADD', quantity: 2, price: 2500 }
-];
+
+function setCompressedCookie(name, value, days) {
+    let compressedValue = LZString.compressToEncodedURIComponent(JSON.stringify(value));
+    let expires = "";
+    if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + compressedValue + expires + "; path=/";
+}
+
+function getCompressedCookie(name) {
+    let cookies = document.cookie.split('; ');
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].split('=');
+        if (cookie[0] === name) {
+            try {
+                let decompressedValue = LZString.decompressFromEncodedURIComponent(cookie[1]);
+                return JSON.parse(decompressedValue || "[]");
+            } catch (e) {
+                return [];
+            }
+        }
+    }
+    return [];
+}
+
+function addNewItem(img, name, swatch, quantity, price) {
+    let cart = getCompressedCookie('cart');
+    if (cart.some(item => item.img === img && item.name === name && item.swatch === swatch)) {
+        alert('Item already exists');
+        return;
+    }
+    cart.push({ id: cart.length, img, name, swatch, quantity, price });
+    setCompressedCookie('cart', cart, 7);
+    getItemsOfCart();
+    renderCart();
+}
+
+function deleteItemFromCart(id) {
+    let cart = getCompressedCookie('cart');
+    cart = cart.filter(item => item.id !== id);
+    cart.forEach((item, index) => item.id = index);
+    setCompressedCookie('cart', cart, 7);
+    getItemsOfCart();
+    renderCart();
+}
+
+function getItemsOfCart() {
+    cart = getCompressedCookie('cart');
+}
+
 let itemToRemove = null;
 
 function renderCart() {
-    let cartItems = document.getElementById("cartItems");
-    let totalAmount = 0;
-    cartItems.innerHTML = "";
-    cart.forEach((item, index) => {
-        totalAmount += item.price;
-        cartItems.innerHTML += `
+  if(cart.length > 0) {
+      let cartItems = document.getElementById("cartItems");
+      let totalAmount = 0;
+      cartItems.innerHTML = "";
+      cart.forEach((item, index) => {
+          totalAmount += item.price;
+          cartItems.innerHTML += `
                     <div class="cart-item">
                         <div style="
     height: 90px;"><img src="${item.img}" alt="${item.name}"></div>
@@ -34,9 +79,14 @@ function renderCart() {
                         </div>
                     </div>
                 `;
-    });
-    document.getElementById("cartCount").textContent = cart.length;
-    document.getElementById("totalAmount").textContent = `$${totalAmount}`;
+      });
+      document.getElementById("cartCount").textContent = cart.length;
+      document.getElementById("totalAmount").textContent = `$${totalAmount}`;
+  }else{
+      document.getElementById("cartItems").innerHTML = "<p>No items in cart</p>";
+      document.getElementById("cartCount").textContent = "0";
+      document.getElementById("totalAmount").textContent = "$0";
+  }
 }
 
 document.getElementById("cart-icon").addEventListener("mouseenter", () => {
@@ -91,12 +141,33 @@ function closeDialog() {
 function confirmRemove() {
     document.body.style.overflow = "auto"; 
     if (itemToRemove !== null) {
-        cart.splice(itemToRemove, 1);
-        renderCart();
+        deleteItemFromCart(itemToRemove);
+        location.reload();
 
-        closeDialog();
+        
     }
 }
 
 
 renderCart();
+
+function migrateCartDataToCartPage() {
+    let cart = getCompressedCookie('cart');
+    let cartpage = getCompressedCookie('cartpage');
+
+    cart.forEach(item => {
+        if (!cartpage.some(existingItem => existingItem.name === item.name && existingItem.img === item.img)) {
+            cartpage.push(item);
+        }
+    });
+
+    setCompressedCookie('cartpage', cartpage, 7);
+    document.cookie = 'cart=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+}
+
+
+
+document.getElementById("checkout").addEventListener("click", function () { 
+    migrateCartDataToCartPage();
+    location.reload();
+})
