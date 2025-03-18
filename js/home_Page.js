@@ -63,12 +63,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const dropdown = document.getElementById(trigger.dataset.dropdown);
 
         trigger.addEventListener("mouseenter", () => {
+            document.documentElement.style.overflow = "hidden";
             dropdown.classList.add("active");
             overlay.classList.add("active");
         });
 
         trigger.addEventListener("mouseleave", () => {
             setTimeout(() => {
+                document.documentElement.style.overflow = "auto";
                 if (!dropdown.matches(":hover") && !trigger.matches(":hover")) {
                     dropdown.classList.remove("active");
                     overlay.classList.remove("active");
