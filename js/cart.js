@@ -149,7 +149,7 @@ function confirmRemove() {
 }
 
 
-renderCart();
+
 
 function migrateCartDataToCartPage() {
     let cart = getCompressedCookie('cart');
