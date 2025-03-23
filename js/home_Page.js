@@ -112,7 +112,7 @@ function loadProduct(productIndex) {
     let container = document.getElementById("products-container");
     container.innerHTML = "";
 
-    let product = obj.results[productIndex]; // Get the specific product
+    let product = obj.results[productIndex]; 
 
     let productCard = document.createElement("div");
     productCard.classList.add("product-card");
@@ -155,8 +155,8 @@ function loadProduct(productIndex) {
     productInfo.innerHTML = `
         <div class="forfilter"><hr> Filter <span style="Color:gray">104 Times</span><hr></div>
         <p class="quickshop">Quick shop</p>
-        <a href="./products_Page.html?id=${productIndex}" class="forhref">
-            <h3 class="product-title">${product.productName}</h3>
+        <a href="./products_Page.html?id=${productIndex}" class="forhref" title="${product.productName} page">
+            <h3 class="product-title" title="${product.productName}>${product.productName}</h3>
         </a>
         <p class="product-price" id="select-${productIndex}">${product.productName} 1 selected</p>
         ${swatchesHTML}
@@ -193,6 +193,7 @@ function loadProducts() {
         let productImageSrc = product.productImg ? product.productImg : "https://via.placeholder.com/200";
         let productImage = document.createElement("img");
         productImage.src = productImageSrc;
+        productImage.title = productImage.src
         productImage.alt = product.productName;
         productImage.classList.add("productimg");
 
@@ -233,11 +234,11 @@ function loadProducts() {
 
         productInfo.innerHTML = `
             <div class="forfilter"><hr class="hrline"> Filter <span style="Color:gray">104Times</span><hr></div>
-            <p class="quickshop">Quick shop</p>
+            <p class="quickshop" title="Quick shop">Quick shop</p>
          
-            <a href="./products_Page.html?id=${i}" class="forhref">
-  <h3 class="product-title">${product.productName}</h3></a>
-      <p class="product-price">${product.productPriceFormatted}</p>
+            <a href="./products_Page.html?id=${i}" class="forhref" title="${product.productName} page">
+  <h3 class="product-title" title="${product.productName} page">${product.productName}</h3></a>
+      <p class="product-price" title="productPriceFormatted">${product.productPriceFormatted}</p>
             <p class="product-price" id="select-${i}">${product.productName} 1 selected</p>
             ${swatchesHTML}
         `;
