@@ -360,10 +360,7 @@ justify-self: center;
 .cart-container{
     margin: 10px 0;
 }
-  .add-to-list::before {
-      content: "♥";
-      margin-right: 5px;
-  }
+
 
   .thumbnail-container {
       width: 100%;

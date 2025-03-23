@@ -49,7 +49,8 @@ function changeMenuContent(category) {
 
     menuList.innerHTML = newMenuContent;
 }
-
+let oop = true;
+let oop2 = true;
 function addHoverEffect() {
     const forcat1 = document.getElementById("forcat1");
     const cat1 = document.getElementById("cat1");
@@ -64,7 +65,17 @@ function addHoverEffect() {
         cat1.style.transform = "";
         cat1.style.top = "3px";
     });
+    forcat1.addEventListener("click", function () {
+        if (oop2) {
 
+            document.getElementById("forcat1").dispatchEvent(new MouseEvent('mouseenter'));
+         
+        } else {
+         
+            document.getElementById("forcat1").dispatchEvent(new MouseEvent('mouseleave'));
+        }
+        oop2 = !oop2;
+    });
     const forprod = document.getElementById("forprod");
     const prod = document.getElementById("prod");
 
@@ -78,7 +89,17 @@ function addHoverEffect() {
         prod.style.transform = "";
         prod.style.top = "3px";
     });
+    forprod.addEventListener("click", function () {
+  if(oop){
 
+      document.getElementById("forprod").dispatchEvent(new MouseEvent('mouseenter'));
+     
+  }else{
+   
+      document.getElementById("forprod").dispatchEvent(new MouseEvent('mouseleave'));
+  }
+  oop=!oop;
+    });
 
 
 }
@@ -150,6 +171,7 @@ async function loadProductDetails(productIndex) {
 function createSwatch(src, id, borderColor) {
     var swatch = document.createElement("img");
     swatch.className = "swatch";
+    swatch.tabIndex="0"
     swatch.src = src || "default-swatch.jpg";
     swatch.style.borderColor = borderColor === "White" ? "black" : borderColor;
     swatch.id = id;
@@ -199,6 +221,7 @@ function updateThumbnails(productIndex, selectedSwatchImg) {
 
     var swatchThumbnail = document.createElement("img");
     swatchThumbnail.className = "thumbnail";
+    swatchThumbnail.tabIndex="0";
     swatchThumbnail.src = selectedSwatchImg || product.productImg;
     images.push(swatchThumbnail.src);
     imgsrctoadd = selectedSwatchImg;
@@ -210,8 +233,10 @@ function updateThumbnails(productIndex, selectedSwatchImg) {
     thumbnailContainer.appendChild(swatchThumbnail);
 
     Object.values(product.images).forEach((imgSrc, index) => {
+
         images.push(imgSrc);
         var imgThumbnail = document.createElement("img");
+        imgThumbnail.tabIndex="0";
         imgThumbnail.className = "thumbnail";
         imgThumbnail.src = imgSrc;
 
@@ -375,26 +400,32 @@ function debounce(func, delay) {
     };
 }
 
-document.getElementById("search").addEventListener('blur', function (event) {
-    setTimeout(() => {
-        document.getElementById("suggestion-container").style.display = "none";
-    }, 200);
+
+document.addEventListener("click", function (event) {
+    var searchInput = document.getElementById("search");
+    var suggestionContainer = document.getElementById("suggestion-container");
+
+    if (!searchInput.contains(event.target) && !suggestionContainer.contains(event.target)) {
+        suggestionContainer.style.display = "none";
+    }
 });
 
-
-document.getElementById("search").addEventListener('focus', function () {
+document.getElementById("search").addEventListener("focus", function () {
     var suggestionContainer = document.getElementById("suggestion-container");
     if (suggestionContainer.children.length > 0) {
         suggestionContainer.style.display = "block";
     }
 });
 
-
-
 document.getElementById("search").addEventListener("input", debounce(function () {
+    var searchInput = document.getElementById("search");
+
+    if (searchInput.value === "") {
+        loadProducts();
+    }
     var searchValue = this.value.toLowerCase();
     var suggestionContainer = document.getElementById("suggestion-container");
-    suggestionContainer.innerHTML = '';
+    suggestionContainer.innerHTML = "";
 
     var filteredProducts = obj.results
         .map((product, index) => ({ ...product, originalIndex: index }))
@@ -407,12 +438,18 @@ document.getElementById("search").addEventListener("input", debounce(function ()
             var suggestionElement = document.createElement("div");
             suggestionElement.className = "suggestion";
             suggestionElement.textContent = product.productName;
+            suggestionElement.tabIndex = "0";
 
             suggestionElement.addEventListener("mousedown", function (event) {
                 event.preventDefault();
+                loadProduct(product.originalIndex);
+            });
 
-                window.location.href = "./products_Page.html?id=" + product.originalIndex;
-
+            suggestionElement.addEventListener("keydown", function (event) {
+                if (event.key === "Enter" || event.keyCode === 13) {
+                    event.preventDefault();
+                    this.dispatchEvent(new Event("mousedown"));
+                }
             });
 
             suggestionContainer.appendChild(suggestionElement);
@@ -421,6 +458,23 @@ document.getElementById("search").addEventListener("input", debounce(function ()
         suggestionContainer.style.display = "none";
     }
 }, 300));
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Tab") {
+        setTimeout(() => {
+            var suggestionContainer = document.getElementById("suggestion-container");
+            var activeElement = document.activeElement;
+
+            if (suggestionContainer.contains(activeElement)) {
+                suggestionContainer.style.display = "block";
+            } else {
+                suggestionContainer.style.display = "none";
+            }
+        }, 10);
+    }
+});
+
+
 
 
 
@@ -566,3 +620,40 @@ document.getElementById("addtocart").addEventListener("click", function(){
   
     addNewItem(imgsrctoadd, itemname, itemswatch, parseInt(quantity.textContent), priceofitem * parseInt(quantity.textContent));
 })
+let u=true
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.body.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+ if (event.target.tagName === "I") {
+
+                if (u) {
+                    event.target.dispatchEvent(new MouseEvent('mouseenter'));
+                } else {
+                    document.getElementById("cart-popup").dispatchEvent(new MouseEvent('mouseleave'));
+
+                }
+                u = !u;
+            } else if (event.target.tagName === "IMG") {
+
+                event.target.click();
+            }
+        }
+    });
+
+});
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Tab") {
+        setTimeout(() => {
+            var suggestionContainer = document.getElementById("suggestion-container");
+            var activeElement = document.activeElement;
+
+            if (suggestionContainer.contains(activeElement)) {
+                suggestionContainer.style.display = "block";
+            } else {
+                suggestionContainer.style.display = "none";
+            }
+        }, 10);
+    }
+});
