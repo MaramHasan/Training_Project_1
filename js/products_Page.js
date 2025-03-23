@@ -117,13 +117,15 @@ async function loadProductDetails(productIndex) {
     var product = obj.results[productIndex];
 
     let mainImg = document.getElementById("main-img");
+
     imgsrctoadd=mainImg.src;
     mainImg.src = product.productImg || "default-image.jpg";
- 
+    mainImg.title = mainImg.src
     document.getElementById("product-name").textContent = product.productName;
+    document.getElementById("product-name").title = product.productName;
     document.getElementById("price").textContent = product.productPriceFormatted;
+    document.getElementById("price").title = "productPriceFormatted";
     priceofitem = product.productPrice;
-    document.getElementById("price").textContent = product.productPriceFormatted;
 
     var swatchesContainer = document.getElementById("swatches-container");
     swatchesContainer.innerHTML = '';
@@ -134,6 +136,7 @@ async function loadProductDetails(productIndex) {
 
     product.swatches.forEach(function (swatch, index) {
         var swatchElement = createSwatch(swatch.img.src, `img-${i}`, swatch.swatchName);
+        swatchElement.title = swatch.swatchName
         i++;
         if (index == 0) {
             swatchElement.classList.add('selected');
@@ -222,6 +225,7 @@ function updateThumbnails(productIndex, selectedSwatchImg) {
     var swatchThumbnail = document.createElement("img");
     swatchThumbnail.className = "thumbnail";
     swatchThumbnail.tabIndex="0";
+    swatchThumbnail.title="Thumbnail"
     swatchThumbnail.src = selectedSwatchImg || product.productImg;
     images.push(swatchThumbnail.src);
     imgsrctoadd = selectedSwatchImg;
@@ -239,7 +243,7 @@ function updateThumbnails(productIndex, selectedSwatchImg) {
         imgThumbnail.tabIndex="0";
         imgThumbnail.className = "thumbnail";
         imgThumbnail.src = imgSrc;
-
+        imgThumbnail.title = "Thumbnail"
         imgThumbnail.onclick = function () {
             imgindex = index + 1;
             updateMainImage(imgSrc);
