@@ -59,9 +59,9 @@ document.addEventListener("DOMContentLoaded", function () {
     overlay.classList.add("dropdown-overlay");
     document.body.appendChild(overlay);
 
-    dropdownTriggers.forEach(trigger => {
+    dropdownTriggers.forEach((trigger,index) => {
         const dropdown = document.getElementById(trigger.dataset.dropdown);
-
+  
         trigger.addEventListener("mouseenter", () => {
             document.documentElement.style.overflow = "hidden";
             dropdown.classList.add("active");
@@ -99,12 +99,20 @@ document.addEventListener("DOMContentLoaded", function () {
     productsLink.addEventListener("click", function () {
         changeMenuContent("products");
     });
+    const forcat = document.getElementById("forcat");
+    forcat.addEventListener("click", function () {
+
+        const trigger = document.querySelector(".dropdown-trigger[data-dropdown='forcatDropdown']");
+        if (trigger) {
+            trigger.dispatchEvent(new MouseEvent('mouseenter'));
+        }
+    });
 });
 function loadProduct(productIndex) {
     let container = document.getElementById("products-container");
     container.innerHTML = "";
 
-    let product = obj.results[productIndex]; // Get the specific product
+    let product = obj.results[productIndex]; 
 
     let productCard = document.createElement("div");
     productCard.classList.add("product-card");
@@ -147,8 +155,8 @@ function loadProduct(productIndex) {
     productInfo.innerHTML = `
         <div class="forfilter"><hr> Filter <span style="Color:gray">104 Times</span><hr></div>
         <p class="quickshop">Quick shop</p>
-        <a href="./products_Page.html?id=${productIndex}" class="forhref">
-            <h3 class="product-title">${product.productName}</h3>
+        <a href="./products_Page.html?id=${productIndex}" class="forhref" title="${product.productName} page">
+            <h3 class="product-title" title="${product.productName}>${product.productName}</h3>
         </a>
         <p class="product-price" id="select-${productIndex}">${product.productName} 1 selected</p>
         ${swatchesHTML}
@@ -185,6 +193,7 @@ function loadProducts() {
         let productImageSrc = product.productImg ? product.productImg : "https://via.placeholder.com/200";
         let productImage = document.createElement("img");
         productImage.src = productImageSrc;
+        productImage.title = productImage.src
         productImage.alt = product.productName;
         productImage.classList.add("productimg");
 
@@ -211,12 +220,12 @@ function loadProducts() {
                 if(index ==0){
 
                     let swatchImgSrc = swatch.img.src ? swatch.img.src : "https://via.placeholder.com/40";
-                    swatchesHTML += `<img class="swatch selected" src="${swatchImgSrc}" data-src="${swatchImgSrc}" alt="${swatch.swatchName}" title="${swatch.swatchName}" style="border-color:${color}">`;
+                    swatchesHTML += `<img class="swatch selected" src="${swatchImgSrc}" data-src="${swatchImgSrc}" alt="${swatch.swatchName}" title="${swatch.swatchName}" style="border-color:${color}" tabindex="0">`;
 
                 }else{
 
                 let swatchImgSrc = swatch.img.src ? swatch.img.src : "https://via.placeholder.com/40";
-                    swatchesHTML += `<img class="swatch" src="${swatchImgSrc}" data-src="${swatchImgSrc}" alt="${swatch.swatchName}" title="${swatch.swatchName}" style="border-color:${color}">`;
+                    swatchesHTML += `<img class="swatch" src="${swatchImgSrc}" data-src="${swatchImgSrc}" alt="${swatch.swatchName}" title="${swatch.swatchName}" style="border-color:${color}" tabindex="0">`;
           }  });
 
 
@@ -225,11 +234,11 @@ function loadProducts() {
 
         productInfo.innerHTML = `
             <div class="forfilter"><hr class="hrline"> Filter <span style="Color:gray">104Times</span><hr></div>
-            <p class="quickshop">Quick shop</p>
+            <p class="quickshop" title="Quick shop">Quick shop</p>
          
-            <a href="./products_Page.html?id=${i}" class="forhref">
-  <h3 class="product-title">${product.productName}</h3></a>
-      <p class="product-price">${product.productPriceFormatted}</p>
+            <a href="./products_Page.html?id=${i}" class="forhref" title="${product.productName} page">
+  <h3 class="product-title" title="${product.productName} page">${product.productName}</h3></a>
+      <p class="product-price" title="productPriceFormatted">${product.productPriceFormatted}</p>
             <p class="product-price" id="select-${i}">${product.productName} 1 selected</p>
             ${swatchesHTML}
         `;
@@ -271,26 +280,31 @@ function debounce(func, delay) {
     };
 }
 
-document.getElementById("search").addEventListener('blur', function (event) {
-    setTimeout(() => {
-        document.getElementById("suggestion-container").style.display = "none";
-    }, 200);
+document.addEventListener("click", function (event) {
+    var searchInput = document.getElementById("search");
+    var suggestionContainer = document.getElementById("suggestion-container");
+
+    if (!searchInput.contains(event.target) && !suggestionContainer.contains(event.target)) {
+        suggestionContainer.style.display = "none";
+    }
 });
 
-
-document.getElementById("search").addEventListener('focus', function () {
+document.getElementById("search").addEventListener("focus", function () {
     var suggestionContainer = document.getElementById("suggestion-container");
     if (suggestionContainer.children.length > 0) {
         suggestionContainer.style.display = "block";
     }
 });
 
-
-
 document.getElementById("search").addEventListener("input", debounce(function () {
+    var searchInput = document.getElementById("search");
+
+    if (searchInput.value === "") {
+        loadProducts();
+    }
     var searchValue = this.value.toLowerCase();
     var suggestionContainer = document.getElementById("suggestion-container");
-    suggestionContainer.innerHTML = '';
+    suggestionContainer.innerHTML = "";
 
     var filteredProducts = obj.results
         .map((product, index) => ({ ...product, originalIndex: index }))
@@ -303,12 +317,18 @@ document.getElementById("search").addEventListener("input", debounce(function ()
             var suggestionElement = document.createElement("div");
             suggestionElement.className = "suggestion";
             suggestionElement.textContent = product.productName;
+            suggestionElement.tabIndex = "0";
 
             suggestionElement.addEventListener("mousedown", function (event) {
                 event.preventDefault();
                 loadProduct(product.originalIndex);
-      
+            });
 
+            suggestionElement.addEventListener("keydown", function (event) {
+                if (event.key === "Enter" || event.keyCode === 13) {
+                    event.preventDefault();
+                    this.dispatchEvent(new Event("mousedown"));
+                }
             });
 
             suggestionContainer.appendChild(suggestionElement);
@@ -317,6 +337,22 @@ document.getElementById("search").addEventListener("input", debounce(function ()
         suggestionContainer.style.display = "none";
     }
 }, 300));
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Tab") {
+        setTimeout(() => {
+            var suggestionContainer = document.getElementById("suggestion-container");
+            var activeElement = document.activeElement;
+
+            if (suggestionContainer.contains(activeElement)) {
+                suggestionContainer.style.display = "block";
+            } else {
+                suggestionContainer.style.display = "none";
+            }
+        }, 10);
+    }
+});
+
 
 
 
@@ -370,7 +406,8 @@ document.getElementById("s-search").addEventListener('focus', function () {
     }
 });
 
-
+let y=true;
+let y2=true
 function addHoverEffect2() {
  
 
@@ -387,6 +424,22 @@ function addHoverEffect2() {
         cat.style.transform = "";
         cat.style.top = "13px";
     });
+
+    forcat.addEventListener("click", function () {
+
+if(y2){
+
+    document.getElementById("forcat").dispatchEvent(new MouseEvent('mouseenter'));
+    cat.style.transform = "rotate(180deg)";
+    cat.style.top = "25px";
+}else{
+    document.getElementById("forcat").dispatchEvent(new MouseEvent('mouseleave'));
+    cat.style.transform = "";
+    cat.style.top = "13px";
+}
+y2=!y2;
+    });
+
     const forprod1 = document.getElementById("forprod1");
     const prod1 = document.getElementById("prod1");
 
@@ -400,6 +453,23 @@ function addHoverEffect2() {
         prod1.style.transform = "";
         prod1.style.top = "13px";
     });
+
+    forprod1.addEventListener("click", function () {
+
+if(y){
+    document.getElementById("forprod1").dispatchEvent(new MouseEvent('mouseenter'));
+    prod1.style.transform = "rotate(180deg)";
+    prod1.style.top = "25px";
+
+}else{
+    document.getElementById("forprod1").dispatchEvent(new MouseEvent('mouseleave'));
+    prod1.style.transform = "";
+    prod1.style.top = "13px";
+}
+y=!y;
+    });
+
+
 
 
 
@@ -433,3 +503,40 @@ document.getElementById("search").addEventListener("keydown", function (event) {
         }
     }
 });
+let u=true;
+let o=true
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.body.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            if (event.target.tagName === "a") {
+
+                if(o){
+                    event.target.dispatchEvent(new MouseEvent('mouseenter'));
+                }else{
+                    document.getElementById("cart-popup").dispatchEvent(new MouseEvent('mouseleave'));
+
+                }
+                o=!o;
+            }
+           else if (event.target.tagName === "I") {
+
+            if(u){
+                event.target.dispatchEvent(new MouseEvent('mouseenter'));
+            }else{
+                document.getElementById("cart-popup").dispatchEvent(new MouseEvent('mouseleave'));
+
+            }
+            u=!u;
+            } else if (event.target.tagName === "IMG") {
+
+                event.target.click();
+            }
+        }
+    });
+
+});
+
+
+
+

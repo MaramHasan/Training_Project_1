@@ -70,16 +70,16 @@
     <div class="logo">MY SHOP</div>
   <div><input type="text" placeholder="Search" id="search"> 🔎
 <div id="suggestion-container"></div></div>
-  
+
     <div class="icons">
-      
+
         <i>❤️</i>
-        <i id="cart-icon">🛒</i>
+        <i id="cart-icon" tabindex="0">🛒</i>
         <i>👤</i>
     </div>
     </div>
         <div class="forlinks">
-          
+
         <ul class="nav-links">
             <li><a href="home_page.html">Home</a></li>
             <li class="dropdown-trigger" data-dropdown="productsDropdown" id="forprod">
@@ -132,7 +132,7 @@
         </ul>
     </div>
     </div>
-    
+
 
     <div class="navbar-top">
         <div class="logo">MY SHOP</div>
@@ -150,9 +150,9 @@
     <div style="width: 100%;"><input type="text" placeholder="Search" id="search-s"> 🔎
         <div id="suggestioncontainer"></div>
     </div>
-       
+
         </div>
-   
+
 
     <div class="navbar-bottom">
         <ul id="menu-list">
@@ -173,25 +173,25 @@
                         <</button>
 
         <div class="image-section">
-         
+
             <div class="mmm"> <img id="main-img" src="" alt="Product Image"></div>
-       
-              
-        
+
+
+
                 <div class="thumbnail-container" id="thumbnail-container">
                     <button class="lefta2" id="lefta2" onclick="movetoleft2()">&lt;</button>
-                
+
                     <div class="thumbnails-wrapper">
                         <div class="thumbnails" id="thumbnails">
                         </div>
                     </div>
-                
+
                     <button class="righta2" id="righta2" onclick="movetoright2()">&gt;</button>
                 </div>
-                
-               
-                
-            
+
+
+
+
 
 
         </div>
@@ -200,7 +200,7 @@
     </div>
         <div class="details-section">
         <div style="display: flex;align-items: center; height: 200px;">
-  
+
            </div>
 
            <div  class="det">
@@ -215,32 +215,32 @@
                 <div class="swatches" id="swatches-container"></div>
                 <div class="cart-container" style="display: flex;" >
                     <div class="quantity-container">
-                        <button onclick="decrement()">-</button>
+                        <button onclick="decrement()" title="decrement">-</button>
                         <span id="quantity">1</span>
-                        <button onclick="increment()">+</button>
-            
+                        <button onclick="increment()" title="increment">+</button>
+
                     </div>
-                    <button class="add-to-cart" id="addtocart">ADD TO CART</button>
+                    <button class="add-to-cart" id="addtocart" title="ADD TO CART">ADD TO CART</button>
                 </div>
-            
-                <div class="add-to-list">ADD TO LIST</div>
+
+                <div class="add-to-list" title="ADD TO LIST">♥ ADD TO LIST</div>
                 <div class="details">
-                    <div style="display: flex;justify-content: space-between;">
-                        <p>PRODUCTS DETAILS</p>
+                    <div style="display: flex;justify-content: space-between;" title="PRODUCTS DETAILS">
+                        <p >PRODUCTS DETAILS</p>
                         <p>+</p>
                     </div>
                     <hr>
-                    <div style="display: flex;justify-content: space-between;">
+                    <div style="display: flex;justify-content: space-between;"  title="FREE SHIPPING IN THE CONTIGUOUS US">
                         <p>FREE SHIPPING IN THE CONTIGUOUS US</p>
                         <p>+</p>
                     </div>
                     <hr>
-                    <div style="display: flex;justify-content: space-between;">
+                    <div style="display: flex;justify-content: space-between;"  title="FREE RETURNS WITHIN 30 DAYS">
                         <p>FREE RETURNS WITHIN 30 DAYS</p>
                         <p>+</p>
                     </div>
                     <hr>
-                    <div style="display: flex;justify-content: space-between;">
+                    <div style="display: flex;justify-content: space-between;"  title="QUALITY CERTIFICATIONS">
                         <p>QUALITY CERTIFICATIONS</p>
                         <p>+</p>
                     </div>
@@ -249,7 +249,7 @@
             </div>
            </div>
             <div style="display: flex;align-items: center; height: 200px;">
-           
+
             </div>
            </div>
     </div>

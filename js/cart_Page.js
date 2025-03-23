@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
         cartContainer.innerHTML = "";
         let total = 0;
 
-        let cart = getCompressedCookie('cartpage');
+        let cart = getCompressedCookie('cart');
 
         cart.forEach((item, index) => {
             let cartItem = document.createElement("div");
@@ -61,10 +61,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     window.deleteItemFromCart = function (id) {
-        let cart = getCompressedCookie('cartpage');
+        let cart = getCompressedCookie('cart');
         cart = cart.filter(item => item.id !== id);
         cart.forEach((item, index) => item.id = index); 
-        setCompressedCookie('cartpage', cart, 7);
+        setCompressedCookie('cart', cart, 7);
         updateCartDisplay();
     };
 
