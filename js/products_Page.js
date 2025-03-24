@@ -135,7 +135,7 @@ async function loadProductDetails(productIndex) {
 
 
     product.swatches.forEach(function (swatch, index) {
-        var swatchElement = createSwatch(swatch.img.src, `img-${i}`, swatch.swatchName);
+        var swatchElement = createSwatch(swatch.img.src, `img-${i}`, swatch.swatchName, product.productName);
         swatchElement.title = swatch.swatchName
         i++;
         if (index == 0) {
@@ -171,9 +171,10 @@ async function loadProductDetails(productIndex) {
 
 }
 
-function createSwatch(src, id, borderColor) {
+function createSwatch(src, id, borderColor,prdname) {
     var swatch = document.createElement("img");
     swatch.className = "swatch";
+    swatch.alt =prdname+ borderColor 
     swatch.tabIndex="0"
     swatch.src = src || "default-swatch.jpg";
     swatch.style.borderColor = borderColor === "White" ? "black" : borderColor;
@@ -226,6 +227,7 @@ function updateThumbnails(productIndex, selectedSwatchImg) {
     swatchThumbnail.className = "thumbnail";
     swatchThumbnail.tabIndex="0";
     swatchThumbnail.title="Thumbnail"
+    swatchThumbnail.alt = "Thumbnail";
     swatchThumbnail.src = selectedSwatchImg || product.productImg;
     images.push(swatchThumbnail.src);
     imgsrctoadd = selectedSwatchImg;
@@ -243,6 +245,7 @@ function updateThumbnails(productIndex, selectedSwatchImg) {
         imgThumbnail.tabIndex="0";
         imgThumbnail.className = "thumbnail";
         imgThumbnail.src = imgSrc;
+        imgThumbnail.alt = "Thumbnail";
         imgThumbnail.title = "Thumbnail"
         imgThumbnail.onclick = function () {
             imgindex = index + 1;
@@ -349,6 +352,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const dropdownTriggers = document.querySelectorAll(".dropdown-trigger");
 
     const overlay = document.createElement("div");
+    overlay.id = "cat-overlay"
     overlay.classList.add("dropdown-overlay");
     document.body.appendChild(overlay);
 
@@ -438,8 +442,11 @@ document.getElementById("search").addEventListener("input", debounce(function ()
     if (filteredProducts.length > 0) {
         suggestionContainer.style.display = "block";
 
-        filteredProducts.forEach((product) => {
+        filteredProducts.forEach((product,index) => {
             var suggestionElement = document.createElement("div");
+            if (index == filteredProducts.length-1){
+                suggestionElement.id="lastsuggestion"
+            }
             suggestionElement.className = "suggestion";
             suggestionElement.textContent = product.productName;
             suggestionElement.tabIndex = "0";
@@ -624,40 +631,113 @@ document.getElementById("addtocart").addEventListener("click", function(){
   
     addNewItem(imgsrctoadd, itemname, itemswatch, parseInt(quantity.textContent), priceofitem * parseInt(quantity.textContent));
 })
-let u=true
-document.addEventListener("DOMContentLoaded", function () {
+let u = true;
 
+document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
- if (event.target.tagName === "I") {
-
+            if (event.target.tagName === "I") {
                 if (u) {
                     event.target.dispatchEvent(new MouseEvent('mouseenter'));
                 } else {
                     document.getElementById("cart-popup").dispatchEvent(new MouseEvent('mouseleave'));
-
                 }
                 u = !u;
             } else if (event.target.tagName === "IMG") {
-
+                event.target.click();
+            }  else if (event.target.tagName === "DIV") {
                 event.target.click();
             }
         }
     });
-
 });
 
 document.addEventListener("keydown", function (event) {
-    if (event.key === "Tab") {
-        setTimeout(() => {
-            var suggestionContainer = document.getElementById("suggestion-container");
-            var activeElement = document.activeElement;
+    if (event.key === "Escape") {
+        document.getElementById("cart-popup").dispatchEvent(new MouseEvent('mouseleave'));
+        document.getElementById("forcat1").dispatchEvent(new MouseEvent('mouseleave'));
+        document.getElementById("cart-popup").dispatchEvent(new MouseEvent('mouseleave'));
+        document.getElementById("forprod").dispatchEvent(new MouseEvent('mouseleave'));
+    }
 
-            if (suggestionContainer.contains(activeElement)) {
-                suggestionContainer.style.display = "block";
+    if (event.key === "Tab") {
+        let activeElement = document.activeElement;
+        let yes=document.getElementById("yes");
+        let x = document.getElementById("remove");
+        let cartIcon = document.getElementById("cart-icon");
+        let cartPopup = document.getElementById("cart-popup");
+        let checkoutBtn = document.getElementById("checkout");
+        let view3 = document.getElementById("view3");
+        let confirmDialog = document.getElementById("confirmDialog")
+
+        
+        let lastcat = document.getElementById("lastcat")
+        let firstcat = document.getElementById("firstcat")
+        let lastprod= document.getElementById("lastprod")
+        let firstprod = document.getElementById("firstprod")
+        let lastsuggestion= document.getElementById("lastsuggestion")
+        let search= document.getElementById("search")
+
+        let isCartPopupVisible = window.getComputedStyle(cartPopup).display !== "none";
+        let isconfirm = window.getComputedStyle(confirmDialog).display !== "none";
+        let isSearchVisible = window.getComputedStyle(document.getElementById("suggestion-container")).display!== "none";
+      
+        if (activeElement === document.getElementById("suggestion-container")) {
+            if (isSearchVisible) {
+                event.preventDefault();
+                search.focus();
+                document.getElementById("search").dispatchEvent(new MouseEvent('input'));
+                document.getElementById("search").dispatchEvent(new MouseEvent('input'));
             } else {
-                suggestionContainer.style.display = "none";
+                
             }
-        }, 10);
+        } else if (activeElement === lastsuggestion && isSearchVisible) {
+            event.preventDefault();
+            search.focus();
+        }
+
+
+
+        if (activeElement === cartIcon) {
+            if (isCartPopupVisible) {
+                event.preventDefault();
+                view3.focus();
+            } else {
+
+            }
+        } else if (activeElement === checkoutBtn && isCartPopupVisible) {
+            event.preventDefault();
+            view3.focus();
+        }
+
+
+
+
+        if (activeElement === confirmDialog) {
+            if (isconfirm) {
+                event.preventDefault();
+                x.focus();
+            } else {
+
+            }
+        } else if (activeElement === yes && isconfirm) {
+            event.preventDefault();
+            x.focus();
+        }
+
+
+
+
+        if (activeElement === lastcat ) {
+            event.preventDefault();
+            firstcat.focus();
+        }
+
+
+        if (activeElement === lastprod) {
+            event.preventDefault();
+            firstprod.focus();
+        }
     }
 });
+
