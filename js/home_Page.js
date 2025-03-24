@@ -119,6 +119,8 @@ function loadProduct(productIndex) {
 
     let productImageSrc = product.productImg ? product.productImg : "https://via.placeholder.com/200";
     let productImage = document.createElement("img");
+    productImage.tabIndex="0"
+    productImage.alt="Product image"
     productImage.src = productImageSrc;
     productImage.alt = product.productName;
     productImage.classList.add("productimg");
@@ -146,7 +148,7 @@ function loadProduct(productIndex) {
             swatchesHTML += `<img class="swatch ${index === 0 ? 'selected' : ''}" 
                 src="${swatchImgSrc}" data-src="${swatchImgSrc}" 
                 alt="${swatch.swatchName}" title="${swatch.swatchName}" 
-                style="border-color:${color}">`;
+                style="border-color:${color}" tabIndex="0">`;
         });
 
         swatchesHTML += `</div>`;
@@ -192,6 +194,9 @@ function loadProducts() {
 
         let productImageSrc = product.productImg ? product.productImg : "https://via.placeholder.com/200";
         let productImage = document.createElement("img");
+
+        productImage.alt = product.productName;
+        productImage.tabIndex="0";
         productImage.src = productImageSrc;
         productImage.title = productImage.src
         productImage.alt = product.productName;
@@ -220,12 +225,12 @@ function loadProducts() {
                 if(index ==0){
 
                     let swatchImgSrc = swatch.img.src ? swatch.img.src : "https://via.placeholder.com/40";
-                    swatchesHTML += `<img class="swatch selected" src="${swatchImgSrc}" data-src="${swatchImgSrc}" alt="${swatch.swatchName}" title="${swatch.swatchName}" style="border-color:${color}" tabindex="0">`;
+                    swatchesHTML += `<img class="swatch selected" tabIndex="0" src="${swatchImgSrc}" data-src="${swatchImgSrc}" alt="${swatch.swatchName}" title="${swatch.swatchName}" style="border-color:${color}" tabindex="0">`;
 
                 }else{
 
                 let swatchImgSrc = swatch.img.src ? swatch.img.src : "https://via.placeholder.com/40";
-                    swatchesHTML += `<img class="swatch" src="${swatchImgSrc}" data-src="${swatchImgSrc}" alt="${swatch.swatchName}" title="${swatch.swatchName}" style="border-color:${color}" tabindex="0">`;
+                    swatchesHTML += `<img class="swatch" src="${swatchImgSrc}" tabIndex="0" data-src="${swatchImgSrc}" alt="${swatch.swatchName}" title="${swatch.swatchName}" style="border-color:${color}" tabindex="0">`;
           }  });
 
 
@@ -234,12 +239,12 @@ function loadProducts() {
 
         productInfo.innerHTML = `
             <div class="forfilter"><hr class="hrline"> Filter <span style="Color:gray">104Times</span><hr></div>
-            <p class="quickshop" title="Quick shop">Quick shop</p>
+            <p class="quickshop" title="Quick shop" tabIndex="0">Quick shop</p>
          
             <a href="./products_Page.html?id=${i}" class="forhref" title="${product.productName} page">
   <h3 class="product-title" title="${product.productName} page">${product.productName}</h3></a>
-      <p class="product-price" title="productPriceFormatted">${product.productPriceFormatted}</p>
-            <p class="product-price" id="select-${i}">${product.productName} 1 selected</p>
+      <p tabIndex="0" class="product-price" title="productPriceFormatted">${product.productPriceFormatted}</p>
+            <p tabIndex="0" class="product-price" id="select-${i}">${product.productName} 1 selected</p>
             ${swatchesHTML}
         `;
 
@@ -313,8 +318,11 @@ document.getElementById("search").addEventListener("input", debounce(function ()
     if (filteredProducts.length > 0) {
         suggestionContainer.style.display = "block";
 
-        filteredProducts.forEach((product) => {
+        filteredProducts.forEach((product,index) => {
             var suggestionElement = document.createElement("div");
+            if (index == filteredProducts.length - 1) {
+                suggestionElement.id = "lastsuggestion"
+            }
             suggestionElement.className = "suggestion";
             suggestionElement.textContent = product.productName;
             suggestionElement.tabIndex = "0";
@@ -539,4 +547,89 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+
+
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+        document.getElementById("cart-popup").dispatchEvent(new MouseEvent('mouseleave'));
+        document.getElementById("forcat").dispatchEvent(new MouseEvent('mouseleave'));
+        document.getElementById("cart-popup").dispatchEvent(new MouseEvent('mouseleave'));
+        document.getElementById("forprod1").dispatchEvent(new MouseEvent('mouseleave'));
+    }
+
+    if (event.key === "Tab") {
+        let activeElement = document.activeElement;
+        let yes = document.getElementById("yes");
+        let x = document.getElementById("remove");
+        let cartIcon = document.getElementById("cart-icon");
+        let cartPopup = document.getElementById("cart-popup");
+        let checkoutBtn = document.getElementById("checkout");
+        let view3 = document.getElementById("view3");
+        let confirmDialog = document.getElementById("confirmDialog")
+
+        let lastcat = document.getElementById("lastcat")
+        let firstcat = document.getElementById("firstcat")
+        let lastprod = document.getElementById("lastprod")
+        let firstprod = document.getElementById("firstprod")
+        let lastsuggestion = document.getElementById("lastsuggestion")
+        let search = document.getElementById("search")
+        let isCartPopupVisible = window.getComputedStyle(cartPopup).display !== "none";
+        let isconfirm = window.getComputedStyle(confirmDialog).display !== "none";
+
+        let isSearchVisible = window.getComputedStyle(document.getElementById("suggestion-container")).display !== "none";
+
+
+        if (activeElement === document.getElementById("suggestion-container")) {
+            if (isSearchVisible) {
+                event.preventDefault();
+                search.focus();
+            } else {
+
+            }
+        } else if (activeElement === lastsuggestion && isSearchVisible) {
+            event.preventDefault();
+            search.focus();
+            document.getElementById("search").dispatchEvent(new MouseEvent('input'));
+           
+        }
+
+        if (activeElement === cartIcon) {
+            if (isCartPopupVisible) {
+                event.preventDefault();
+                view3.focus();
+            } else {
+
+            }
+        } else if (activeElement === checkoutBtn && isCartPopupVisible) {
+            event.preventDefault();
+            view3.focus();
+        }
+
+        if (activeElement === confirmDialog) {
+            if (isconfirm) {
+                event.preventDefault();
+                x.focus();
+            } else {
+
+            }
+        } else if (activeElement === yes && isconfirm) {
+            event.preventDefault();
+            x.focus();
+        }
+
+
+
+
+        if (activeElement === lastcat) {
+            event.preventDefault();
+            firstcat.focus();
+        }
+
+
+        if (activeElement === lastprod) {
+            event.preventDefault();
+            firstprod.focus();
+        }
+    }
+});
 

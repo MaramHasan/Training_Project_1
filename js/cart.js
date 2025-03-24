@@ -63,12 +63,15 @@ function renderCart() {
           cartItems.innerHTML += `
                     <div class="cart-item">
                         <div style="
-    height: 90px;"><img src="${item.img}" alt="${item.name}"></div>
+    height: 90px;"><img src="${item.img}" alt="${item.name}" tabIndex="0"></div>
                         <div style="flex:7">
-                            <strong>${item.name}</strong><br>
-                            Swatch: ${item.swatch}<br>
-                            Quantity: ${item.quantity}<br>
-                            Total: $${item.price}
+                            <strong tabIndex="0">${item.name}</strong>
+                            <br>
+                               <span tabIndex="0">    Swatch: ${item.swatch}</span>
+                            <br>
+                              <span tabIndex="0">     Quantity: ${item.quantity}</span>
+                            <br>
+                      <span tabIndex="0">      Total: ${item.price}$</span>
                         </div>
                        <div> <button onclick="openConfirmDialog(${index})">X</button>
                         <br><br>
@@ -81,7 +84,7 @@ function renderCart() {
                 `;
       });
       document.getElementById("cartCount").textContent = cart.length;
-      document.getElementById("totalAmount").textContent = `$${totalAmount}`;
+      document.getElementById("totalAmount").textContent = `${totalAmount}$`;
   }else{
       document.getElementById("cartItems").innerHTML = "<p>No items in cart</p>";
       document.getElementById("cartCount").textContent = "0";
@@ -125,6 +128,9 @@ function openConfirmDialog(index) {
   setTimeout(function(){
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
+      event.preventDefault();
+      let x = document.getElementById("x");
+      x.focus();
   },50)
 
 }
