@@ -387,6 +387,9 @@ padding: 3px;
       box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
   }
   @media (max-width: 768px) {
+      .icons{
+          margin-right: 0px;
+      }
       #product-name {
           width: 100%;
       }

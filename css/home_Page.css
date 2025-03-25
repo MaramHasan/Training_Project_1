@@ -193,6 +193,9 @@ height: 0px;
     display: none;
 }
 @media (max-width: 768px) {
+    .icons{
+        margin-right: 0px;
+    }
     .filter-sidebar {
         padding: 5px;
         border: 2px solid black;

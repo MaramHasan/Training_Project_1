@@ -17,6 +17,7 @@ function getCompressedCookie(name) {
         if (cookie[0] === name) {
             try {
                 let decompressedValue = LZString.decompressFromEncodedURIComponent(cookie[1]);
+                console.log(decompressedValue)
                 return JSON.parse(decompressedValue || "[]");
             } catch (e) {
                 return [];
@@ -48,7 +49,8 @@ function deleteItemFromCart(id) {
 }
 
 function getItemsOfCart() {
-    cart = getCompressedCookie('cart');
+    console.log("a")
+    cart = getCompressedCookie('cart'); console.log("a2")
 }
 
 let itemToRemove = null;
@@ -59,7 +61,7 @@ function renderCart() {
       let totalAmount = 0;
       cartItems.innerHTML = "";
       cart.forEach((item, index) => {
-          totalAmount += item.price;
+          totalAmount += item.price*item.quantity;
           cartItems.innerHTML += `
                     <div class="cart-item">
                         <div style="
@@ -73,7 +75,7 @@ function renderCart() {
                             <br>
                       <span tabIndex="0">      Total: ${item.price}$</span>
                         </div>
-                       <div> <button onclick="openConfirmDialog(${index})">X</button>
+                       <div> <button onclick="openConfirmDialog(${index})" aria-label="remove ${item.name} ${item.swatch} from the cart">X</button>
                         <br><br>
                         <br>
                         <br>
@@ -88,7 +90,7 @@ function renderCart() {
   }else{
       document.getElementById("cartItems").innerHTML = "<p>No items in cart</p>";
       document.getElementById("cartCount").textContent = "0";
-      document.getElementById("totalAmount").textContent = "$0";
+      document.getElementById("totalAmount").textContent = "0$";
   }
 }
 
@@ -128,8 +130,7 @@ function openConfirmDialog(index) {
   setTimeout(function(){
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
-      event.preventDefault();
-      let x = document.getElementById("x");
+      let x = document.getElementById("remove");
       x.focus();
   },50)
 
@@ -177,3 +178,5 @@ document.getElementById("checkout").addEventListener("click", function () {
     migrateCartDataToCartPage();
     location.reload();
 })
+getItemsOfCart();
+renderCart();

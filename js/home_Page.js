@@ -1,4 +1,5 @@
 
+
 const productsLink = document.getElementById("productsLink");
 const menuList = document.getElementById("menu-list");
 
@@ -6,45 +7,51 @@ function changeMenuContent(category) {
     let newMenuContent = "";
 
     if (category === "products") {
+        counter=1;
         newMenuContent = `
-                    <li><a href="#" onclick="changeMenuContent('menu')">&lt; 2 Products</a></li>
+                    <li><a href="#" onclick="changeMenuContent('menu')" id="pova2">&lt; 2 Products</a></li>
                     <hr style="width:100%">
                     <li><a href="#" onclick="changeMenuContent('2.1')">2.1 PAGE LINK HEADER</a></li>
                     <li><a href="#" onclick="changeMenuContent('2.2')">2.2 PAGE LINK HEADER</a></li>
-                    <li><a href="#" onclick="changeMenuContent('2.3')">2.3 PAGE LINK HEADER</a></li>
+                    <li><a href="#" onclick="changeMenuContent('2.3')" id="povalast1">2.3 PAGE LINK HEADER</a></li>
                 `;
     } else if (category === "2.1") {
+        counter=2;
         newMenuContent = `
-                    <li><a href="#" onclick="changeMenuContent('products')">&lt; 2.1 PAGE LINK HEADER</a></li>
+                    <li><a href="#" onclick="changeMenuContent('products')" id="pova3">&lt; 2.1 PAGE LINK HEADER</a></li>
                     <hr style="width:100%">
                     <li><a href="#">2.1.1 Page link</a></li>
                     <li><a href="#">2.1.2 Page link</a></li>
-                    <li><a href="#">2.1.3 Page link</a></li>
+                    <li><a href="#" id="povalast">2.1.3 Page link</a></li>
                 `;
     } else if (category === "2.2") {
+        counter = 2;
         newMenuContent = `
-                    <li><a href="#" onclick="changeMenuContent('products')">&lt; 2.2 PAGE LINK HEADER</a></li>
+                    <li><a href="#" id="pova3" onclick="changeMenuContent('products')">&lt; 2.2 PAGE LINK HEADER</a></li>
                     <hr style="width:100%">
                     <li><a href="#">2.2.1 Page link</a></li>
                     <li><a href="#">2.2.2 Page link</a></li>
-                    <li><a href="#">2.2.3 Page link</a></li>
+                    <li><a href="#" id="povalast">2.2.3 Page link</a></li>
                 `;
     } else if (category === "2.3") {
+        counter = 2;
         newMenuContent = `
-                    <li><a href="#" onclick="changeMenuContent('products')">&lt; 2.3 PAGE LINK HEADER</a></li>
+                    <li><a href="#" id="pova3" onclick="changeMenuContent('products')">&lt; 2.3 PAGE LINK HEADER</a></li>
                     <hr style="width:100%">
                     <li><a href="#">2.3.1 Page link</a></li>
-                    <li><a href="#">2.3.2 Page link</a></li>
+                    <li><a href="#" id="povalast">2.3.2 Page link</a></li>
                     
                 `;
     } else if (category == "menu") {
+        uut = false
+        counter=0;
         newMenuContent = `
                    <li><a href="home_page.html">Home</a></li>
- <li class="dropdown-trigger"><a href="#" onclick="changeMenuContent('products')">Products <span style="color: white;">></span></a></li>
+ <li class="dropdown-trigger"><a href="#" aria-label="products" onclick="changeMenuContent('products')" id="pova">Products <span style="color: white;">></span></a></li>
                    <li><a href="#">Goods</a></li>
                    <li><a href="#">About</a></li>
                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Categories <span class="arrow2">⌄</span></a></li>
+                    <li><a href="#" aria-label="Categories" id="cats">Categories <span class="arrow2">⌄</span></a></li>
                 `;
     }
 
@@ -129,7 +136,9 @@ function loadProduct(productIndex) {
 
     let filterDiv = document.createElement("div");
     filterDiv.classList.add("forfilter");
-    filterDiv.innerHTML = "<hr> Sort <span style='color:gray'>Relevance</span><hr>";
+    filterDiv.tabIndex="0"
+    filterDiv.ariaLabel ="Sort Relevance"
+    filterDiv.innerHTML = "<hr> Sort <span style='color:gray' >Relevance</span><hr>";
 
     containerDiv.appendChild(filterDiv);
     containerDiv.appendChild(productImage);
@@ -155,7 +164,7 @@ function loadProduct(productIndex) {
     }
 
     productInfo.innerHTML = `
-        <div class="forfilter"><hr> Filter <span style="Color:gray">104 Times</span><hr></div>
+        <div class="forfilter" tabIndex="0" aria-label="Filter 104 Times"><hr> Filter <span style="Color:gray">104 Times</span><hr></div>
         <p class="quickshop">Quick shop</p>
         <a href="./products_Page.html?id=${productIndex}" class="forhref" title="${product.productName} page">
             <h3 class="product-title" title="${product.productName}>${product.productName}</h3>
@@ -207,7 +216,8 @@ function loadProducts() {
         let filterDiv = document.createElement("div");
         filterDiv.classList.add("forfilter");
         filterDiv.innerHTML = "<hr class='hrline'> Sort <span style='color:gray'>Relevance</span><hr>";
-
+        filterDiv.tabIndex = "0"
+        filterDiv.ariaLabel = "Sort Relevance"
         containerDiv.appendChild(filterDiv);
         containerDiv.appendChild(productImage);
         productImage.classList.add("productimg");
@@ -238,7 +248,7 @@ function loadProducts() {
         }
 
         productInfo.innerHTML = `
-            <div class="forfilter"><hr class="hrline"> Filter <span style="Color:gray">104Times</span><hr></div>
+            <div class="forfilter" tabIndex="0" aria-label="Filter 104 Times"><hr class="hrline"> Filter <span style="Color:gray">104Times</span><hr></div>
             <p class="quickshop" title="Quick shop" tabIndex="0">Quick shop</p>
          
             <a href="./products_Page.html?id=${i}" class="forhref" title="${product.productName} page">
@@ -274,7 +284,7 @@ function loadProducts() {
 
 
 window.onload = loadProducts;
-
+let counter=0
 
 
 function debounce(func, delay) {
@@ -345,19 +355,66 @@ document.getElementById("search").addEventListener("input", debounce(function ()
         suggestionContainer.style.display = "none";
     }
 }, 300));
-
+let uut=true;
 document.addEventListener("keydown", function (event) {
     if (event.key === "Tab") {
+        if (document.activeElement == document.getElementById("povalast1")) {
+            event.preventDefault();
+            document.getElementById("pova2").focus();
+        }
+        if (document.activeElement == document.getElementById("povalast")) {
+            event.preventDefault();
+            document.getElementById("pova3").focus();
+        }
+
+
+if(!uut){
+    event.preventDefault();
+    counter = 0
+    document.getElementById("pova").focus();  
+    uut=true
+}
+
+else{
+if(document.activeElement ==document.getElementById("cats")){
+    event.preventDefault();
+    counter = 0
+    document.getElementById("menu-icon").focus();  
+    uut=true
+}
+   else if (counter == 1) {
+        event.preventDefault();
+        counter = 0
+        document.getElementById("pova2").focus();
+
+} else if (counter == 2) {
+    event.preventDefault();
+    counter = 0
+    document.getElementById("pova3").focus();
+}
+else if (counter == 2) {
+    event.preventDefault();
+    counter = 0
+    document.getElementById("pova3").focus();
+}
+ 
+}
         setTimeout(() => {
             var suggestionContainer = document.getElementById("suggestion-container");
             var activeElement = document.activeElement;
-
+            var suggestion = document.getElementById("suggestioncontainer")
+            if (suggestion.contains(activeElement)) {
+                suggestion.style.display = "block";
+            } else {
+                suggestion.style.display = "none";
+            }
             if (suggestionContainer.contains(activeElement)) {
                 suggestionContainer.style.display = "block";
             } else {
                 suggestionContainer.style.display = "none";
             }
         }, 10);
+      
     }
 });
 
@@ -377,11 +434,12 @@ document.getElementById("s-search").addEventListener("input", debounce(function 
     if (filteredProducts.length > 0) {
         suggestionContainer.style.display = "block";
 
-        filteredProducts.forEach((product) => {
+        filteredProducts.forEach((product,index) => {
             var suggestionElement = document.createElement("div");
             suggestionElement.className = "suggestion";
             suggestionElement.textContent = product.productName;
-
+            suggestionElement.tabIndex="0"
+          
             suggestionElement.addEventListener("mousedown", function (event) {
                 event.preventDefault();
 
@@ -402,11 +460,7 @@ document.getElementById("s-search").addEventListener("input", debounce(function 
 
 
 
-document.getElementById("s-search").addEventListener('blur', function (event) {
-    setTimeout(() => {
-        document.getElementById("suggestioncontainer").style.display = "none";
-    }, 200);
-});
+
 document.getElementById("s-search").addEventListener('focus', function () {
     var suggestionContainer = document.getElementById("suggestioncontainer");
     if (suggestionContainer.children.length > 0) {
@@ -539,6 +593,9 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (event.target.tagName === "IMG") {
 
                 event.target.click();
+            } else if (event.target.tagName === "DIV") {
+
+                event.target.click();
             }
         }
     });
@@ -559,11 +616,15 @@ document.addEventListener("keydown", function (event) {
 
     if (event.key === "Tab") {
         let activeElement = document.activeElement;
+
+
+
+
         let yes = document.getElementById("yes");
         let x = document.getElementById("remove");
         let cartIcon = document.getElementById("cart-icon");
         let cartPopup = document.getElementById("cart-popup");
-        let checkoutBtn = document.getElementById("checkout");
+        let checkoutBtn = document.getElementById("closebutton");
         let view3 = document.getElementById("view3");
         let confirmDialog = document.getElementById("confirmDialog")
 
@@ -590,8 +651,24 @@ document.addEventListener("keydown", function (event) {
             event.preventDefault();
             search.focus();
             document.getElementById("search").dispatchEvent(new MouseEvent('input'));
-           
+
         }
+
+
+        // if (activeElement === navbarBottom) {
+        //     if (isSearchVisible) {
+        //         event.preventDefault();
+        //         search.focus();
+        //     } else {
+
+        //     }
+        // } else if (activeElement === lastsuggestion && isSearchVisible) {
+        //     event.preventDefault();
+        //     search.focus();
+        //     document.getElementById("search").dispatchEvent(new MouseEvent('input'));
+
+        // }
+
 
         if (activeElement === cartIcon) {
             if (isCartPopupVisible) {
@@ -633,3 +710,7 @@ document.addEventListener("keydown", function (event) {
     }
 });
 
+document.getElementById('closebutton').onclick = function(){
+
+    document.getElementById("cart-popup").dispatchEvent(new MouseEvent('mouseleave'));
+}
