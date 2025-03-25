@@ -5,50 +5,58 @@ function changeMenuContent(category) {
     let newMenuContent = "";
 
     if (category === "products") {
+        counter = 1;
         newMenuContent = `
-                    <li><a href="#" onclick="changeMenuContent('menu')">&lt; 2 Products</a></li>
+                    <li><a href="#" onclick="changeMenuContent('menu')" id="pova2">&lt; 2 Products</a></li>
                     <hr style="width:100%">
                     <li><a href="#" onclick="changeMenuContent('2.1')">2.1 PAGE LINK HEADER</a></li>
                     <li><a href="#" onclick="changeMenuContent('2.2')">2.2 PAGE LINK HEADER</a></li>
-                    <li><a href="#" onclick="changeMenuContent('2.3')">2.3 PAGE LINK HEADER</a></li>
+                    <li><a href="#" onclick="changeMenuContent('2.3')" id="povalast1">2.3 PAGE LINK HEADER</a></li>
                 `;
     } else if (category === "2.1") {
+        counter = 2;
         newMenuContent = `
-                    <li><a href="#" onclick="changeMenuContent('products')">&lt; 2.1 PAGE LINK HEADER</a></li>
+                    <li><a href="#" onclick="changeMenuContent('products')" id="pova3">&lt; 2.1 PAGE LINK HEADER</a></li>
                     <hr style="width:100%">
                     <li><a href="#">2.1.1 Page link</a></li>
                     <li><a href="#">2.1.2 Page link</a></li>
-                    <li><a href="#">2.1.3 Page link</a></li>
+                    <li><a href="#" id="povalast">2.1.3 Page link</a></li>
                 `;
     } else if (category === "2.2") {
+        counter = 2;
         newMenuContent = `
-                    <li><a href="#" onclick="changeMenuContent('products')">&lt; 2.2 PAGE LINK HEADER</a></li>
+                    <li><a href="#" id="pova3" onclick="changeMenuContent('products')">&lt; 2.2 PAGE LINK HEADER</a></li>
                     <hr style="width:100%">
                     <li><a href="#">2.2.1 Page link</a></li>
                     <li><a href="#">2.2.2 Page link</a></li>
-                    <li><a href="#">2.2.3 Page link</a></li>
+                    <li><a href="#" id="povalast">2.2.3 Page link</a></li>
                 `;
     } else if (category === "2.3") {
+        counter = 2;
         newMenuContent = `
-                    <li><a href="#" onclick="changeMenuContent('products')">&lt; 2.3 PAGE LINK HEADER</a></li>
+                    <li><a href="#" id="pova3" onclick="changeMenuContent('products')">&lt; 2.3 PAGE LINK HEADER</a></li>
                     <hr style="width:100%">
                     <li><a href="#">2.3.1 Page link</a></li>
-                    <li><a href="#">2.3.2 Page link</a></li>
+                    <li><a href="#" id="povalast">2.3.2 Page link</a></li>
                     
                 `;
     } else if (category == "menu") {
+        uut = false
+        counter = 0;
         newMenuContent = `
                    <li><a href="home_page.html">Home</a></li>
-                   <li class="dropdown-trigger"><a href="#" onclick="changeMenuContent('products')">Products <span style="color: white;">></span></a></li>
+ <li class="dropdown-trigger"><a href="#" aria-label="products" onclick="changeMenuContent('products')" id="pova">Products <span style="color: white;">></span></a></li>
                    <li><a href="#">Goods</a></li>
                    <li><a href="#">About</a></li>
                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Categories <span class="arrow">⌄</span></a></li>
+                    <li><a href="#" aria-label="Categories" id="cats">Categories <span class="arrow2">⌄</span></a></li>
                 `;
     }
 
     menuList.innerHTML = newMenuContent;
 }
+
+
 let oop = true;
 let oop2 = true;
 function addHoverEffect() {
@@ -451,15 +459,12 @@ document.getElementById("search").addEventListener("input", debounce(function ()
             suggestionElement.textContent = product.productName;
             suggestionElement.tabIndex = "0";
 
-            suggestionElement.addEventListener("mousedown", function (event) {
-                event.preventDefault();
-                loadProduct(product.originalIndex);
-            });
+         
 
             suggestionElement.addEventListener("keydown", function (event) {
                 if (event.key === "Enter" || event.keyCode === 13) {
-                    event.preventDefault();
-                    this.dispatchEvent(new Event("mousedown"));
+                    window.location.href = "./products_Page.html?id=" + product.originalIndex;
+                    
                 }
             });
 
@@ -470,18 +475,64 @@ document.getElementById("search").addEventListener("input", debounce(function ()
     }
 }, 300));
 
+let uut = true;
 document.addEventListener("keydown", function (event) {
     if (event.key === "Tab") {
         setTimeout(() => {
             var suggestionContainer = document.getElementById("suggestion-container");
             var activeElement = document.activeElement;
-
+            var suggestion = document.getElementById("suggestioncontainer")
+        
+            if (suggestion.contains(activeElement)) {
+             
+                suggestion.style.display = "block";
+            } else {
+              
+                suggestion.style.display = "none";
+            }
             if (suggestionContainer.contains(activeElement)) {
                 suggestionContainer.style.display = "block";
             } else {
                 suggestionContainer.style.display = "none";
             }
         }, 10);
+        if (document.activeElement == document.getElementById("povalast1")) {
+            event.preventDefault();
+            document.getElementById("pova2").focus();
+        }
+        if (document.activeElement == document.getElementById("povalast")) {
+            event.preventDefault();
+            document.getElementById("pova3").focus();
+        }
+        if (!uut) {
+            event.preventDefault();
+            counter = 0
+            document.getElementById("pova").focus();
+            uut = true
+        }
+
+        else {
+            if (document.activeElement == document.getElementById("cats")) {
+                event.preventDefault();
+                counter = 0
+                document.getElementById("menu-icon").focus();
+                uut = true
+            }
+            else if (counter == 1) {
+                event.preventDefault();
+                counter = 0
+                document.getElementById("pova2").focus();
+
+            } else if (counter == 2) {
+                event.preventDefault();
+                counter = 0
+                document.getElementById("pova3").focus();
+            }
+            
+        }
+
+   
+
     }
 });
 
@@ -489,54 +540,54 @@ document.addEventListener("keydown", function (event) {
 
 
 
-// document.getElementById("search-s").addEventListener("input", debounce(function () {
-//     var searchValue = this.value.toLowerCase();
-//     var suggestionContainer = document.getElementById("suggestioncontainer");
-//     suggestionContainer.innerHTML = '';
+document.getElementById("search-s").addEventListener("input", debounce(function () {
+    var searchValue = this.value.toLowerCase();
+    var suggestionContainer = document.getElementById("suggestioncontainer");
+    suggestionContainer.innerHTML = '';
 
-//     var filteredProducts = obj.results
-//         .map((product, index) => ({ ...product, originalIndex: index }))
-//         .filter(product => product.productName.toLowerCase().includes(searchValue));
+    var filteredProducts = obj.results
+        .map((product, index) => ({ ...product, originalIndex: index }))
+        .filter(product => product.productName.toLowerCase().includes(searchValue));
 
-//     if (filteredProducts.length > 0) {
-//         suggestionContainer.style.display = "block";
+    if (filteredProducts.length > 0) {
+        suggestionContainer.style.display = "block";
 
-//         filteredProducts.forEach((product) => {
-//             var suggestionElement = document.createElement("div");
-//             suggestionElement.className = "suggestion";
-//             suggestionElement.textContent = product.productName;
+        filteredProducts.forEach((product) => {
+            var suggestionElement = document.createElement("div");
+            suggestionElement.className = "suggestion";
+            suggestionElement.textContent = product.productName;
+            suggestionElement.tabIndex="0"
+            suggestionElement.addEventListener("click", function (event) {
+             
 
-//             suggestionElement.addEventListener("mousedown", function (event) {
-//                 event.preventDefault();
+                window.location.href = "./products_Page.html?id=" + product.originalIndex;
 
-//                 window.location.href = "./products_Page.html?id=" + product.originalIndex;
+            });
 
-//             });
-
-//             suggestionContainer.appendChild(suggestionElement);
-//         });
-//     } else {
-//         suggestionContainer.style.display = "none";
-//     }
-// }, 300));
-
-
+            suggestionContainer.appendChild(suggestionElement);
+        });
+    } else {
+        suggestionContainer.style.display = "none";
+    }
+}, 300));
 
 
 
 
-// document.getElementById("search-s").addEventListener("keydown", function (event) {
 
-//     if (event.key === "Enter") {
 
-//         var searchValue = this.value.toLowerCase();
-//         var matchedIndex = obj.results.findIndex(product => product.productName.toLowerCase() == searchValue);
+document.getElementById("search-s").addEventListener("keydown", function (event) {
 
-//         if (matchedIndex != -1) {
-//             window.location.href = "./products_Page.html?id=" + matchedIndex;
-//         }
-//     }
-// });
+    if (event.key === "Enter") {
+
+        var searchValue = this.value.toLowerCase();
+        var matchedIndex = obj.results.findIndex(product => product.productName.toLowerCase() == searchValue);
+
+        if (matchedIndex != -1) {
+            window.location.href = "./products_Page.html?id=" + matchedIndex;
+        }
+    }
+});
 document.getElementById("search").addEventListener("keydown", function (event) {
 
     if (event.key === "Enter") {
@@ -550,17 +601,7 @@ document.getElementById("search").addEventListener("keydown", function (event) {
     }
 });
 
-// document.getElementById("search-s").addEventListener('blur', function (event) {
-//     setTimeout(() => {
-//         document.getElementById("suggestioncontainer").style.display = "none";
-//     }, 200);
-// });
-// document.getElementById("search-s").addEventListener('focus', function () {
-//     var suggestionContainer = document.getElementById("suggestioncontainer");
-//     if (suggestionContainer.children.length > 0) {
-//         suggestionContainer.style.display = "block";
-//     }
-// });
+
 
 
 
@@ -666,7 +707,7 @@ document.addEventListener("keydown", function (event) {
         let x = document.getElementById("remove");
         let cartIcon = document.getElementById("cart-icon");
         let cartPopup = document.getElementById("cart-popup");
-        let checkoutBtn = document.getElementById("checkout");
+        let checkoutBtn = document.getElementById("closebutton");
         let view3 = document.getElementById("view3");
         let confirmDialog = document.getElementById("confirmDialog")
 
@@ -741,3 +782,7 @@ document.addEventListener("keydown", function (event) {
     }
 });
 
+document.getElementById('closebutton').onclick = function () {
+
+    document.getElementById("cart-popup").dispatchEvent(new MouseEvent('mouseleave'));
+}

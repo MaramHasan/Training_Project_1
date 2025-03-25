@@ -11,14 +11,14 @@
 <body>
 
     <div class="cart-container">
-        <h2>YOUR CART (<span id="cartCount"></span>)</h2>
+        <h2 tabindex="0">YOUR CART (<span id="cartCount"></span>)</h2>
         <div class="cart-items-wrapper" id="cartItems"></div>
         <div class="cart-footer">
-            <span>Estimated Total</span>
-            <span id="totalAmount">$0</span>
+            <span tabindex="0">Estimated Total</span>
+            <span id="totalAmount" tabindex="0">0$</span>
         </div>
         <button class="checkout-btn">Checkout</button>
-        <button class="checkout-btn"><a href="home_page.html" class="a">Back to Home</a></button>
+        <button class="checkout-btn" onclick="window.location.href='home_page.html'">Back to Home</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
