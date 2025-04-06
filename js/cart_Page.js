@@ -41,15 +41,15 @@ document.addEventListener("DOMContentLoaded", function () {
             cartItem.innerHTML = `
          <div class="m">
              <div style="display:flex">
-                <img src="${item.img}" alt="${item.name}">
+                <img src="${item.img}" alt="${item.swatch} ${item.name}" tabindex="0">
              <div class="data">
-                <div>${item.name}</div>
-                <div>${item.swatch}</div>
-                <div>$${item.price}</div>
-                <div>Quantity: ${item.quantity}</div>
+                <div tabindex="0">${item.name}</div>
+                <div tabindex="0">${item.swatch}</div>
+                <div tabindex="0">$${item.price}</div>
+                <div tabindex="0">Quantity: ${item.quantity}</div>
              </div>
              </div>
-                <button onclick="deleteItemFromCart(${item.id})">X</button>
+                <button onclick="deleteItemFromCart(${item.id})" aria-label="remove the item from the cart">X</button>
          </div>
             `;
             cartContainer.appendChild(cartItem);
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         cartCount.textContent = cart.length;
-        totalAmount.textContent = `$${total.toFixed(2)}`;
+        totalAmount.textContent = `${total.toFixed(2)}$`;
     }
 
     window.deleteItemFromCart = function (id) {
