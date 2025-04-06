@@ -46,7 +46,7 @@ function changeMenuContent(category) {
         newMenuContent = `
                    <li><a href="home_page.html">Home</a></li>
  <li class="dropdown-trigger"><a href="#" aria-label="products" onclick="changeMenuContent('products')" id="pova">Products <span style="color: white;">></span></a></li>
-                   <li><a href="#">Goods</a></li>
+                   <li><a href="../goods_Page.html">Goods</a></li>
                    <li><a href="#">About</a></li>
                    <li><a href="#">Contact</a></li>
                     <li><a href="#" aria-label="Categories" id="cats">Categories <span class="arrow2">⌄</span></a></li>
